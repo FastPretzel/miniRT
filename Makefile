@@ -4,6 +4,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Iincludes -g #-Ofast
 FILES = main.c	vec_utils.c	mlx_utils.c\
 	camera.c	objects.c	utils.c\
+	lst_utils.c	sphere.c
 
 #FILES_B
 

@@ -42,7 +42,7 @@ typedef struct	s_sphere
 {
 	t_vec	orig;
 	double	r;
-	int	color;
+	//int	color;
 }	t_sphere;
 
 typedef struct s_mlx {
@@ -55,17 +55,31 @@ typedef struct s_mlx {
 	int	endian;
 }	t_mlx;
 
-typedef struct	s_solver
+//typedef struct	s_solver
+//{
+	//double	tca;
+	//double	thc;
+//}	t_solver;
+
+typedef struct	s_object
 {
-	double	tca;
-	double	thc;
-}	t_solver;
+	void	*params;
+	int	(*intersect)();
+	int	color;
+}	t_object;
+
+typedef struct	s_list
+{
+	void		*content;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_minirt
 {
 	t_mlx		*mlx;
 	t_camera	*camera;
-	t_sphere	*sp;
+	//t_sphere	*sp;
+	t_list		*obj_lst;
 	t_ray		ray;
 }	t_minirt;
 
@@ -76,6 +90,11 @@ void	init_hooks(t_minirt *minirt);
 void	mlx_start(t_mlx *mlx);
 //int	render(t_minirt *minirt);
 void	paint_black(t_minirt *minirt);
+
+//lst_utils
+t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstnew(void *content);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
 //vec_utils
 t_vec	vec_add(t_vec a, t_vec b);
@@ -88,6 +107,14 @@ t_vec	vec_norm(t_vec v);
 t_vec	vec_neg(t_vec v);
 t_vec	vec_mat_mul(t_vec v, t_vec rows[3]);
 
+//other utils
+double	ft_min_double(double a, double b);
+double	deg2rad(double deg);
+
 void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);
+
+//intersections
+int	inter(t_minirt *minirt, double x, double y, int *color);
+int	inter_sphere(t_sphere *sp, t_ray *ray);
 #endif

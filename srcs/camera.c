@@ -26,9 +26,9 @@ void	init_camera(t_minirt *minirt)
 
 	cam = malloc(sizeof(t_camera));
 	cam->orig = init_orig();
-	cam->dir = init_dir();
-	cam->right = vec_cross(cam->dir, (t_vec){0, 1, 0});
-	cam->up = vec_cross(cam->right, cam->dir);
+	cam->dir = vec_norm(init_dir());
+	cam->right = vec_norm(vec_cross(cam->dir, (t_vec){0, 1, 0}));
+	cam->up = vec_norm(vec_cross(cam->right, cam->dir));
 	cam->fov = FOV;
 	minirt->camera = cam;
 }

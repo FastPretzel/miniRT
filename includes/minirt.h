@@ -110,6 +110,7 @@ t_vec	vec_mat_mul(t_vec v, t_vec rows[3]);
 //other utils
 double	ft_min_double(double a, double b);
 double	deg2rad(double deg);
+void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
 
 void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);

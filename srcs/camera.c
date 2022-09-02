@@ -6,7 +6,7 @@ static t_vec	init_orig()
 
 	ret.x = 0;
 	ret.y = 0;
-	ret.z = 1;
+	ret.z = 2;
 	return (ret);
 }
 
@@ -32,3 +32,8 @@ void	init_camera(t_minirt *minirt)
 	cam->fov = FOV;
 	minirt->camera = cam;
 }
+
+/*t_vec	look_at(t_camera *cam)*/
+/*{*/
+	
+/*}*/

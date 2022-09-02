@@ -6,7 +6,6 @@ int	inter_sphere(t_sphere *sp, t_ray *ray)
 	double		d2;
 	double		t0;
 	double		t1;
-	/*t_solver	solver;*/
 	double		tca;
 	double		thc;
 

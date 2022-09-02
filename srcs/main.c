@@ -41,6 +41,7 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	return (ret);
 }
 
+#include <time.h>
 int	inter(t_minirt *minirt, double x, double y, int *color)
 {
 	t_list		*tmp;
@@ -56,7 +57,7 @@ int	inter(t_minirt *minirt, double x, double y, int *color)
 		if (obj->intersect((t_sphere *)obj->params, &(minirt->ray)) && minirt->ray.t < tnear)
 		{
 			tnear = minirt->ray.t;
-			*color = obj->color;
+			*color = obj->color;;
 		}
 		tmp = tmp->next;
 	}
@@ -65,23 +66,36 @@ int	inter(t_minirt *minirt, double x, double y, int *color)
 	return (0);
 }
 
-void	render(t_minirt *minirt)
+int	render(void *rt)
 {
 	int	x;
 	int	y;
 	int	color;
+	t_minirt	*minirt;
 
 	y = -1;
+	minirt = (t_minirt *)rt;
+	t_list *tmp = minirt->obj_lst;
+
+	srand(time(0));
+	while (tmp)
+	{
+		t_object *obj = (t_object *)tmp->content;
+		obj->color = rand() % 0xFFFFFF;
+		tmp = tmp->next;
+		/*tmp->content->color = rand() % 0xFFFFFF;*/
+	}
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
 		{
-			color = 0;
 			if (inter(minirt, x, y, &color))
 				my_mlx_pixel_put(minirt->mlx, x, y, color);
 		}
 	}
+	mlx_put_image_to_window(minirt->mlx->ptr, minirt->mlx->win, minirt->mlx->img, 0, 0);
+	return (0);
 }
 
 int	main()
@@ -97,8 +111,8 @@ int	main()
 	init_camera(&minirt);
 	init_objs(&minirt);
 	render(&minirt);
-	/*mlx_loop_hook(mlx.ptr, &render, &minirt);*/
-	mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);
+	mlx_loop_hook(mlx.ptr, &render, (void *)&minirt);
+	/*mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);*/
 	mlx_loop(mlx.ptr);
 	return (0);
 }

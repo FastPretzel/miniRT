@@ -9,6 +9,8 @@
 #include <string.h>
 #include <fcntl.h>
 
+#include <time.h>
+
 #define WIDTH 1920
 #define HEIGHT 1080
 
@@ -27,6 +29,7 @@ typedef struct s_ray
 	t_vec	dir;
 	t_vec	orig;
 	double	t;
+	t_vec	phit;
 }	t_ray;
 
 typedef struct	s_camera
@@ -45,6 +48,12 @@ typedef struct	s_sphere
 	//int	color;
 }	t_sphere;
 
+typedef struct	s_light
+{
+	t_vec	pos;
+	double	intens;
+}	t_light;
+
 typedef struct s_mlx {
 	void	*ptr;
 	void	*win;
@@ -54,6 +63,13 @@ typedef struct s_mlx {
 	int	line_length;
 	int	endian;
 }	t_mlx;
+
+typedef struct	s_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_color;
 
 //typedef struct	s_solver
 //{
@@ -65,7 +81,7 @@ typedef struct	s_object
 {
 	void	*params;
 	int	(*intersect)();
-	int	color;
+	t_color	color;
 }	t_object;
 
 typedef struct	s_list
@@ -80,6 +96,7 @@ typedef struct s_minirt
 	t_camera	*camera;
 	//t_sphere	*sp;
 	t_list		*obj_lst;
+	t_list		*light_lst;
 	t_ray		ray;
 }	t_minirt;
 
@@ -89,7 +106,7 @@ int	cross_exit(t_minirt *minirt);
 void	init_hooks(t_minirt *minirt);
 void	mlx_start(t_mlx *mlx);
 //int	render(t_minirt *minirt);
-void	paint_black(t_minirt *minirt);
+//void	paint_black(t_minirt *minirt);
 
 //lst_utils
 t_list	*ft_lstlast(t_list *lst);
@@ -111,11 +128,17 @@ t_vec	vec_mat_mul(t_vec v, t_vec rows[3]);
 double	ft_min_double(double a, double b);
 double	deg2rad(double deg);
 void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
+//void	put_color(t_rt *rt, t_img img, int x, int y);
+void	put_color(t_mlx *mlx, int x, int y, t_color color);
+t_color	col_mul(t_color a, double b);
 
 void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);
+void	init_light(t_minirt *minirt);
 
 //intersections
-int	inter(t_minirt *minirt, double x, double y, int *color);
+int	inter(t_minirt *minirt, double x, double y, t_color *color);
 int	inter_sphere(t_sphere *sp, t_ray *ray);
+
+t_color	calc_light(t_object *obj, t_minirt *rt);
 #endif

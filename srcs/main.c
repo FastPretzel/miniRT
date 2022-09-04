@@ -1,5 +1,15 @@
 #include "minirt.h"
 
+static t_color get_color(double r, double g, double b)
+{
+	t_color	ret;
+
+	ret.r = r / 255.0;
+	ret.g = g / 255.0;
+	ret.b = b / 255.0;
+	return (ret);
+}
+
 void	reset_img(t_minirt *minirt)
 {
 	int	size;
@@ -41,8 +51,7 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	return (ret);
 }
 
-#include <time.h>
-int	inter(t_minirt *minirt, double x, double y, int *color)
+int	inter(t_minirt *minirt, double x, double y, t_color *color)
 {
 	t_list		*tmp;
 	t_object	*obj;
@@ -57,7 +66,10 @@ int	inter(t_minirt *minirt, double x, double y, int *color)
 		if (obj->intersect((t_sphere *)obj->params, &(minirt->ray)) && minirt->ray.t < tnear)
 		{
 			tnear = minirt->ray.t;
-			*color = obj->color;;
+			/**color = obj->color;*/
+			minirt->ray.phit = vec_add(minirt->ray.orig, \
+					vec_mul(minirt->ray.dir, minirt->ray.t));
+			*color = calc_light(obj, minirt);
 		}
 		tmp = tmp->next;
 	}
@@ -70,20 +82,22 @@ int	render(void *rt)
 {
 	int	x;
 	int	y;
-	int	color;
+	t_color	color = {0, 0, 0};
 	t_minirt	*minirt;
 
 	y = -1;
 	minirt = (t_minirt *)rt;
 	t_list *tmp = minirt->obj_lst;
 
+	t_color colors[4]= {get_color(101, 0, 101), get_color(85, 205, 140), get_color(30, 100, 10), get_color(85, 85, 85)};
+	/*t_color colors[4]= {(t_color){101, 0, 101}, (t_color){255, 0, 0}, (t_color){30, 100, 10}, (t_color){85, 85, 85}};*/
+	int i = 0;
 	srand(time(0));
 	while (tmp)
 	{
 		t_object *obj = (t_object *)tmp->content;
-		obj->color = rand() % 0xFFFFFF;
+		obj->color = colors[i++];
 		tmp = tmp->next;
-		/*tmp->content->color = rand() % 0xFFFFFF;*/
 	}
 	while (++y < HEIGHT)
 	{
@@ -91,7 +105,8 @@ int	render(void *rt)
 		while (++x < WIDTH)
 		{
 			if (inter(minirt, x, y, &color))
-				my_mlx_pixel_put(minirt->mlx, x, y, color);
+				/*my_mlx_pixel_put(minirt->mlx, x, y, color);*/
+				put_color(minirt->mlx, x, y, color);
 		}
 	}
 	mlx_put_image_to_window(minirt->mlx->ptr, minirt->mlx->win, minirt->mlx->img, 0, 0);
@@ -106,13 +121,15 @@ int	main()
 	mlx_start(&mlx);
 	minirt.mlx = &mlx;
 	minirt.obj_lst = 0;
+	minirt.light_lst = 0;
 	init_hooks(&minirt);
 	reset_img(&minirt);
 	init_camera(&minirt);
 	init_objs(&minirt);
+	init_light(&minirt);
 	render(&minirt);
-	mlx_loop_hook(mlx.ptr, &render, (void *)&minirt);
-	/*mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);*/
+	/*mlx_loop_hook(mlx.ptr, &render, (void *)&minirt);*/
+	mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);
 	mlx_loop(mlx.ptr);
 	return (0);
 }

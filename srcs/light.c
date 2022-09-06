@@ -22,7 +22,7 @@ void	init_light(t_minirt *minirt)
 	t_light	*light;
 
 	light = malloc(sizeof(t_light));
-	light->pos = (t_vec){-1, 0, 2};
+	light->pos = (t_vec){0, 1, 2};
 	light->intens = 1.0;
 	ft_lstadd_back(&(minirt->light_lst), ft_lstnew((void *)light));
 }

@@ -11,6 +11,8 @@ int	inter_sphere(t_sphere *sp, t_ray *ray)
 
 	l = vec_sub(sp->orig, ray->orig);
 	tca = vec_dot(ray->dir, l);
+	if (tca < 0)
+		return (0);
 	d2 = vec_dot(l, l) - tca * tca;
 	if (d2 > sp->r * sp->r)
 		return (0);
@@ -22,3 +24,8 @@ int	inter_sphere(t_sphere *sp, t_ray *ray)
 	ray->t = ft_min_double(t0, t1);
 	return (1);
 }
+
+/*int	inter_sphere(t_sphere *sp, t_ray *ray)*/
+/*{*/
+
+/*}*/

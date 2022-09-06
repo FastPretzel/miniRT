@@ -22,10 +22,10 @@ void	init_objs(t_minirt *minirt)
 	obj2 = malloc(sizeof(t_object));
 	obj3 = malloc(sizeof(t_object));
 	obj4 = malloc(sizeof(t_object));
-	obj->params = init_sphere(minirt, (t_vec){0, 0, 0}, 0.2);
-	obj2->params = init_sphere(minirt, (t_vec){0.5, 0, 1.5}, 0.1);//red
-	obj3->params = init_sphere(minirt, (t_vec){0, 1, 0.5}, 0.4);
-	obj4->params = init_sphere(minirt, (t_vec){-1, 0, 1}, 0.5);
+	obj->params = init_sphere(minirt, (t_vec){0, 0, -0.2}, 0.2);
+	obj2->params = init_sphere(minirt, (t_vec){0.5, 0, -0.3}, 0.1);//red
+	obj3->params = init_sphere(minirt, (t_vec){0, 1, -0.1}, 0.4);
+	obj4->params = init_sphere(minirt, (t_vec){-1, 0, -0.2}, 0.5);
 	obj->intersect = inter_sphere;
 	obj2->intersect = inter_sphere;
 	obj3->intersect = inter_sphere;

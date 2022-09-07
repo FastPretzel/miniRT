@@ -77,11 +77,19 @@ typedef struct	s_color
 	//double	thc;
 //}	t_solver;
 
+typedef struct	s_material
+{
+	t_color	color;
+	double	albedo[2];
+	double	spec_exp;
+}	t_material;
+
 typedef struct	s_object
 {
 	void	*params;
 	int	(*intersect)();
-	t_color	color;
+	//t_color	color;
+	t_material	mat;
 }	t_object;
 
 typedef struct	s_list
@@ -99,6 +107,11 @@ typedef struct s_minirt
 	t_list		*light_lst;
 	t_ray		ray;
 }	t_minirt;
+
+//temp utils
+t_color get_color(double r, double g, double b);
+int	get_int_color(int r, int g, int b);
+void	reset_img(t_minirt *minirt);
 
 void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 
@@ -131,6 +144,7 @@ void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
 //void	put_color(t_rt *rt, t_img img, int x, int y);
 void	put_color(t_mlx *mlx, int x, int y, t_color color);
 t_color	col_mul(t_color a, double b);
+t_color	col_add(t_color a, t_color b);
 
 void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);

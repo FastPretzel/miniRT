@@ -1,38 +1,5 @@
 #include "minirt.h"
 
-static t_color get_color(double r, double g, double b)
-{
-	t_color	ret;
-
-	ret.r = r / 255.0;
-	ret.g = g / 255.0;
-	ret.b = b / 255.0;
-	return (ret);
-}
-
-static int	get_int_color(int r, int g, int b)
-{
-	return (r << 16 | g << 8 | b);
-}
-
-void	reset_img(t_minirt *minirt)
-{
-	/*int	size;*/
-	int	i;
-	int	j;
-
-	/*size = WIDTH * HEIGHT * (minirt->mlx->bits_per_pixel / 8);*/
-	/*while (size--)*/
-		/*minirt->mlx->addr[size] = 0;*/
-	i = -1;
-	while (++i < HEIGHT)
-	{
-		j = -1;
-		while (++j < WIDTH)
-			my_mlx_pixel_put(minirt->mlx, j, i, get_int_color(20, 20, 60));
-	}
-}
-
 t_vec	look_at(t_camera *camera, double x, double y)
 {
 	t_vec	rows[3];
@@ -57,9 +24,10 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	cam = minirt->camera;
 	scale = tan(deg2rad(cam->fov * 0.5));
 	aspect = WIDTH / (double)HEIGHT;
-	px = (2 * (x + 0.5) / WIDTH - 1) * scale * aspect;
-	py = (1 - 2 * (y + 0.5) / HEIGHT) * scale;
-	ret.dir = vec_norm(look_at(cam, px, py));
+	px = (2 * (x + 0.5) / (double)WIDTH - 1) * scale * aspect;
+	py = (1 - 2 * (y + 0.5) / (double)HEIGHT) * scale;
+	/*ret.dir = vec_norm(look_at(cam, px, py));*/
+	ret.dir = vec_norm((t_vec){px, py, -1});
 	ret.orig = cam->orig;
 	ret.t = INFINITY;
 	return (ret);
@@ -101,18 +69,8 @@ int	render(void *rt)
 
 	y = -1;
 	minirt = (t_minirt *)rt;
-	t_list *tmp = minirt->obj_lst;
+	/*t_list *tmp = minirt->obj_lst;*/
 
-	t_color colors[4]= {get_color(101, 0, 101), get_color(85, 205, 140), get_color(30, 100, 10), get_color(85, 85, 85)};
-	/*t_color colors[4]= {(t_color){101, 0, 101}, (t_color){255, 0, 0}, (t_color){30, 100, 10}, (t_color){85, 85, 85}};*/
-	int i = 0;
-	srand(time(0));
-	while (tmp)
-	{
-		t_object *obj = (t_object *)tmp->content;
-		obj->color = colors[i++];
-		tmp = tmp->next;
-	}
 	while (++y < HEIGHT)
 	{
 		x = -1;

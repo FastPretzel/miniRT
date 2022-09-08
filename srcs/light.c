@@ -31,9 +31,14 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 void	init_light(t_minirt *minirt)
 {
 	t_light	*light;
+	t_light	*light2;
 
 	light = malloc(sizeof(t_light));
+	light2 = malloc(sizeof(t_light));
 	light->pos = (t_vec){0, 1, 2};
+	light->pos = (t_vec){10, 0, 10};
 	light->intens = 1.0;
+	light2->intens = 0.5;
 	ft_lstadd_back(&(minirt->light_lst), ft_lstnew((void *)light));
+	ft_lstadd_back(&(minirt->light_lst), ft_lstnew((void *)light2));
 }

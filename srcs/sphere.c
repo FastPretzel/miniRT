@@ -1,6 +1,15 @@
 #include "minirt.h"
 
-int	inter_sphere(t_sphere *sp, t_ray *ray)
+t_vec	get_norm_sphere(t_ray ray, void *ptr)
+{
+	t_vec		normal;
+	t_sphere	*sp = (t_sphere *)ptr;
+
+	normal = vec_norm(vec_sub(ray.phit, sp->orig));
+	return (normal);
+}
+
+int	inter_sphere(void *ptr, t_ray *ray)
 {
 	t_vec		l;
 	double		d2;
@@ -8,6 +17,7 @@ int	inter_sphere(t_sphere *sp, t_ray *ray)
 	double		t1;
 	double		tca;
 	double		thc;
+	t_sphere	*sp = (t_sphere *)ptr;
 
 	l = vec_sub(sp->orig, ray->orig);
 	tca = vec_dot(ray->dir, l);
@@ -24,8 +34,3 @@ int	inter_sphere(t_sphere *sp, t_ray *ray)
 	ray->t = ft_min_double(t0, t1);
 	return (1);
 }
-
-/*int	inter_sphere(t_sphere *sp, t_ray *ray)*/
-/*{*/
-
-/*}*/

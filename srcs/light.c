@@ -12,7 +12,8 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 	t_list	*tmp;
 	t_vec	normal;
 
-	normal = vec_norm(vec_sub(rt->ray.phit, ((t_sphere *)obj->params)->orig));
+	/*normal = vec_norm(vec_sub(rt->ray.phit, ((t_sphere *)obj->params)->orig));*/
+	normal = obj->get_normal(rt->ray, obj->params);
 	tmp = rt->light_lst;
 	diff_int = 0;
 	spec_int = 0;

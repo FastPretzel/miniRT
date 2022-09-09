@@ -48,6 +48,12 @@ typedef struct	s_sphere
 	//int	color;
 }	t_sphere;
 
+typedef struct	s_plane
+{
+	t_vec	orig;
+	t_vec	normal;
+}	t_plane;
+
 typedef struct	s_light
 {
 	t_vec	pos;
@@ -86,10 +92,11 @@ typedef struct	s_material
 
 typedef struct	s_object
 {
+	t_material	mat;
 	void	*params;
 	int	(*intersect)();
+	t_vec	(*get_normal)();
 	//t_color	color;
-	t_material	mat;
 }	t_object;
 
 typedef struct	s_list
@@ -152,7 +159,12 @@ void	init_light(t_minirt *minirt);
 
 //intersections
 int	inter(t_minirt *minirt, double x, double y, t_color *color);
-int	inter_sphere(t_sphere *sp, t_ray *ray);
+int	inter_sphere(void *ptr, t_ray *ray);
+int	inter_plane(void *ptr, t_ray *ray);
+
+//get_normal
+t_vec	get_norm_sphere(t_ray ray, void *ptr);
+t_vec	get_norm_plane(t_ray ray, void *ptr);
 
 t_color	calc_light(t_object *obj, t_minirt *rt);
 #endif

@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes -g #-Ofast
 FILES = main.c	vec_utils.c	mlx_utils.c\
 	camera.c	objects.c	utils.c\
 	lst_utils.c	sphere.c	light.c\
-	color_utils.c	temp_utils.c
+	color_utils.c	temp_utils.c	plane.c
 
 #FILES_B
 

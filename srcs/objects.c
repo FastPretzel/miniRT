@@ -72,9 +72,9 @@ void	init_objs(t_minirt *minirt)
 	obj3->mat = (t_material){get_color(30, 100, 10),{0.9, 0.3},10.0};//green sp
 	obj4->mat = (t_material){get_color(85, 85, 85),{0.9, 0.1},10.0};//grey sp
 	
-	obj5->mat = (t_material){get_color(255, 0, 0),{0.9, 0.0},20.0};//red plane
-	obj6->mat = (t_material){get_color(100, 0, 200),{0.9, 0.0},20.0};//purple plane
-	obj7->mat = (t_material){get_color(0, 150, 200),{0.9, 0.0},20.0};
+	obj5->mat = (t_material){get_color(255, 0, 0),{0.9, 0.1},20.0};//red plane
+	obj6->mat = (t_material){get_color(100, 0, 200),{0.9, 0.1},20.0};//purple plane
+	obj7->mat = (t_material){get_color(0, 150, 200),{0.9, 0.1},20.0};
 
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj));
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj2));

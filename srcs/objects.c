@@ -43,7 +43,7 @@ void	init_objs(t_minirt *minirt)
 	obj->params = init_sphere((t_vec){0, 0, -2}, 0.2);
 	obj2->params = init_sphere((t_vec){0.5, 0, -3}, 0.1);//red
 	obj3->params = init_sphere((t_vec){0, 0.5, -1}, 0.2);
-	obj4->params = init_sphere((t_vec){-1, -1, -2}, 0.5);
+	obj4->params = init_sphere((t_vec){-0.2, -0.2, -3}, 0.5);
 
 	obj5->params = init_plane((t_vec){2, 0, 0}, (t_vec){1,0,0});
 	obj6->params = init_plane((t_vec){0, 2, 0}, (t_vec){0,1,0});

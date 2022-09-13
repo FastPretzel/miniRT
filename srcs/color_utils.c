@@ -1,18 +1,5 @@
 #include "minirt.h"
 
-/*void	put_color(t_minirt *rt, t_img img, int x, int y)*/
-/*{*/
-	/*t_color	color;*/
-
-	/*color = rt->nearest->get_color(rt->nearest->params);*/
-	/*color = apply_lights(rt, color);*/
-	/*img.data[x * (img.bpp >> 3) + y **/
-		/*img.size_line] = (char)(color.b * 255);*/
-	/*img.data[x * (img.bpp >> 3) + y **/
-		/*img.size_line + 1] = (char)(color.g * 255);*/
-	/*img.data[x * (img.bpp >> 3) + y **/
-		/*img.size_line + 2] = (char)(color.r * 255);*/
-/*}*/
 void	put_color(t_mlx *mlx, int x, int y, t_color color)
 {
 	/*t_color	color;*/
@@ -41,8 +28,8 @@ t_color	col_add(t_color a, t_color b)
 {
 	t_color	ret;
 
-	ret.r = a.r + b.r;
-	ret.g = a.g + b.g;
-	ret.b = a.b + b.b;
+	ret.r = fmin(1.0, a.r + b.r);
+	ret.g = fmin(1.0, a.g + b.g);
+	ret.b = fmin(1.0, a.b + b.b);
 	return (ret);
 }

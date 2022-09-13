@@ -47,7 +47,7 @@ t_vec	vec_cross(t_vec a, t_vec b)
 
 double	vec_len(t_vec v)
 {
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	return (fabs(sqrt(v.x * v.x + v.y * v.y + v.z * v.z)));
 }
 
 t_vec	vec_norm(t_vec v)

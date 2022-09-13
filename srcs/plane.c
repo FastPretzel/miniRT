@@ -5,7 +5,8 @@ t_vec	get_norm_plane(t_ray ray, void *ptr)
 	t_plane	*pl = (t_plane *)ptr;
 
 	(void)ray;
-	return (pl->normal);
+	/*if (vec_dot(pl->normal, */
+	return (vec_norm(pl->normal));
 }
 
 int	inter_plane(void *ptr, t_ray *ray)
@@ -14,8 +15,13 @@ int	inter_plane(void *ptr, t_ray *ray)
 	t_vec	p0l0;
 	t_plane	*pl = (t_plane *)ptr;
 
-	denom = vec_dot(pl->normal, vec_sub(ray->dir, ray->orig));
-	if (denom > 1e-6)
+	/*t_ray test_ray = {(t_vec){0,0,1}, (t_vec){0,0,2}, 1, {0,0,0}};*/
+	/*if (vec_dot(vec_sub(pl->orig, ray->orig), pl->normal) < 0)*/
+		/*pl->normal = vec_neg(pl->normal);*/
+	denom = vec_dot(pl->normal, vec_norm(ray->dir));
+	/*if (fabs(denom) > 1.0001)*/
+		/*printf("%f\n", denom);*/
+	if ((denom) > DBL_EPSILON)
 	{
 		p0l0 = vec_sub(pl->orig, ray->orig);
 		ray->t = vec_dot(p0l0, pl->normal) / denom;

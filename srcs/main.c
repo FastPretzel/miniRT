@@ -59,29 +59,31 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	/*return (ret);*/
 /*}*/
 
-int	inter(t_minirt *minirt, double x, double y, t_color *color)
+int	inter(t_minirt *rt, double x, double y, t_color *color)
 {
 	t_list		*tmp;
 	t_object	*obj;
 	double		tnear;
 
 	tnear = INFINITY;
-	tmp = minirt->obj_lst;
-	minirt->ray = gen_ray(minirt, x, y);
+	tmp = rt->obj_lst;
+	rt->ray = gen_ray(rt, x, y);
 	while (tmp)
 	{
 		obj = (t_object *)tmp->content;
-		if (obj->intersect(obj->params, &(minirt->ray)) && minirt->ray.t < tnear)
+		/*if (obj->intersect == inter_plane)*/
+			/*printf("AAAAAA\n");*/
+		if (obj->intersect(obj->params, &(rt->ray)) && rt->ray.t < tnear)
 		{
-			tnear = minirt->ray.t;
-			minirt->ray.phit = vec_add(minirt->ray.orig, \
-					vec_mul(minirt->ray.dir, minirt->ray.t));
-			*color = calc_light(obj, minirt);
+			tnear = rt->ray.t;
+			rt->ray.phit = vec_add(rt->ray.orig, \
+					vec_mul(rt->ray.dir, rt->ray.t));
+			*color = calc_light(obj, rt);
 			/**color = obj->mat.color;*/
 		}
 		tmp = tmp->next;
 	}
-	if (minirt->ray.t < INFINITY)
+	if (rt->ray.t < INFINITY)
 		return (1);
 	return (0);
 }
@@ -100,7 +102,7 @@ int	render(void *rt)
 	while (++y < HEIGHT)
 	{
 		x = -1;
-		while (++x < WIDTH)
+		while (++x < WIDTH/2)
 		{
 			if (inter(minirt, x, y, &color))
 				/*my_mlx_pixel_put(minirt->mlx, x, y, color);*/

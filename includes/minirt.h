@@ -10,12 +10,14 @@
 #include <fcntl.h>
 
 #include <time.h>
+#include <float.h>
 
 #define WIDTH 1920
 #define HEIGHT 1080
 
 //tmp defines
 #define FOV 90.0
+#define AMBIENT 0.2
 
 typedef struct s_vec
 {

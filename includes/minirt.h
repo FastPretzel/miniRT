@@ -115,6 +115,7 @@ typedef struct s_minirt
 	t_list		*obj_lst;
 	t_list		*light_lst;
 	t_ray		ray;
+	double		tnear;
 }	t_minirt;
 
 //temp utils
@@ -160,13 +161,14 @@ void	init_objs(t_minirt *minirt);
 void	init_light(t_minirt *minirt);
 
 //intersections
-int	inter(t_minirt *minirt, double x, double y, t_color *color);
+//int	inter(t_minirt *minirt, double x, double y, t_color *color);
+void	inter(t_minirt *minirt, double x, double y);
 int	inter_sphere(void *ptr, t_ray *ray);
 int	inter_plane(void *ptr, t_ray *ray);
 
 //get_normal
-t_vec	get_norm_sphere(t_ray ray, void *ptr);
-t_vec	get_norm_plane(t_ray ray, void *ptr);
+t_vec	get_norm_sphere(t_ray *ray, void *ptr);
+t_vec	get_norm_plane(t_ray *ray, void *ptr);
 
 t_color	calc_light(t_object *obj, t_minirt *rt);
 #endif

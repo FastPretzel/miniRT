@@ -59,54 +59,55 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	/*return (ret);*/
 /*}*/
 
-int	inter(t_minirt *rt, double x, double y, t_color *color)
+void	inter(t_minirt *rt, double x, double y)
 {
 	t_list		*tmp;
 	t_object	*obj;
-	double		tnear;
+	/*double		tnear;*/
+	void	*nearest_obj = 0;
+	t_color	color = {0, 0, 0};
 
-	tnear = INFINITY;
+	rt->tnear = INFINITY;
 	tmp = rt->obj_lst;
 	rt->ray = gen_ray(rt, x, y);
 	while (tmp)
 	{
 		obj = (t_object *)tmp->content;
-		/*if (obj->intersect == inter_plane)*/
-			/*printf("AAAAAA\n");*/
-		if (obj->intersect(obj->params, &(rt->ray)) && rt->ray.t < tnear)
+		if (obj->intersect(obj->params, &(rt->ray)) && rt->ray.t < rt->tnear)
 		{
-			tnear = rt->ray.t;
-			rt->ray.phit = vec_add(rt->ray.orig, \
-					vec_mul(rt->ray.dir, rt->ray.t));
-			*color = calc_light(obj, rt);
-			/**color = obj->mat.color;*/
+			rt->tnear = rt->ray.t;
+			nearest_obj = obj;
 		}
 		tmp = tmp->next;
 	}
-	if (rt->ray.t < INFINITY)
-		return (1);
-	return (0);
+	if (nearest_obj)
+	{
+		rt->ray.phit = vec_add(rt->ray.orig, \
+				vec_mul(rt->ray.dir, rt->ray.t));
+		color = calc_light((t_object *)nearest_obj, rt);
+		put_color(rt->mlx, x, y, color);
+	}
+	/*if (rt->ray.t < INFINITY)*/
+		/*return (1);*/
+	/*return (0);*/
 }
 
 int	render(void *rt)
 {
 	int	x;
 	int	y;
-	t_color	color = {0, 0, 0};
 	t_minirt	*minirt;
 
 	y = -1;
 	minirt = (t_minirt *)rt;
-	/*t_list *tmp = minirt->obj_lst;*/
-
 	while (++y < HEIGHT)
 	{
 		x = -1;
-		while (++x < WIDTH/2)
+		while (++x < WIDTH)
 		{
-			if (inter(minirt, x, y, &color))
-				/*my_mlx_pixel_put(minirt->mlx, x, y, color);*/
-				put_color(minirt->mlx, x, y, color);
+			/*if (inter(minirt, x, y, &color))*/
+				/*put_color(minirt->mlx, x, y, color);*/
+			inter(minirt, x, y);
 		}
 	}
 	mlx_put_image_to_window(minirt->mlx->ptr, minirt->mlx->win, minirt->mlx->img, 0, 0);

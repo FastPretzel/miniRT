@@ -41,6 +41,13 @@ typedef struct	s_camera
 	double	fov;
 	t_vec	right;
 	t_vec	up;
+
+	//t_vec	u;
+	//t_vec	v;
+	//t_vec	w;
+	//t_vec	horiz;
+	//t_vec	vert;
+	//t_vec	low_left_corner;
 }	t_camera;
 
 typedef struct	s_sphere
@@ -79,12 +86,6 @@ typedef struct	s_color
 	double	b;
 }	t_color;
 
-//typedef struct	s_solver
-//{
-	//double	tca;
-	//double	thc;
-//}	t_solver;
-
 typedef struct	s_material
 {
 	t_color	color;
@@ -111,11 +112,11 @@ typedef struct s_minirt
 {
 	t_mlx		*mlx;
 	t_camera	*camera;
-	//t_sphere	*sp;
 	t_list		*obj_lst;
 	t_list		*light_lst;
 	t_ray		ray;
 	double		tnear;
+	double		t;
 }	t_minirt;
 
 //temp utils

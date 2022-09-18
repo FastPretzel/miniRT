@@ -42,14 +42,14 @@ void	init_objs(t_minirt *minirt)
 	obj7 = malloc(sizeof(t_object));
 	obj8 = malloc(sizeof(t_object));
 
-	obj->params = init_sphere((t_vec){1, 0, -2}, 2);
+	obj->params = init_sphere((t_vec){0, 0, -2}, 2);
 	obj2->params = init_sphere((t_vec){-1, 1, -2}, 2);//
 	/*obj3->params = init_sphere((t_vec){0, 0.5, -1}, 0.2);*/
 	/*obj4->params = init_sphere((t_vec){-0.2, -0.2, -3}, 0.5);*/
 
-	obj5->params = init_plane((t_vec){2, 0, 0}, (t_vec){1,0,0});
-	obj6->params = init_plane((t_vec){0, -2, 0}, (t_vec){0,-1,0});
-	obj7->params = init_plane((t_vec){-3, 0, 0}, (t_vec){-1,0,0});
+	obj5->params = init_plane((t_vec){3, 0, 0}, (t_vec){-1,0,0});
+	obj6->params = init_plane((t_vec){0, -2, 0}, (t_vec){0,1,0});
+	obj7->params = init_plane((t_vec){-3, 0, 0}, (t_vec){1,0,0});
 	obj8->params = init_plane((t_vec){0, 0, -4}, (t_vec){0,0,-1});
 	
 	obj->intersect = inter_sphere;
@@ -86,8 +86,8 @@ void	init_objs(t_minirt *minirt)
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj2));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj3));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj4));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj8));*/
 }

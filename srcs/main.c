@@ -26,35 +26,22 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	aspect = WIDTH / (double)HEIGHT;
 	px = (2 * (x + 0.5) / (double)WIDTH - 1) * scale * aspect;
 	py = (1 - 2 * (y + 0.5) / (double)HEIGHT) * scale;
-	/*ret.dir = vec_norm(look_at(cam, px, py));*/
+	/*[>ret.dir = vec_norm(look_at(cam, px, py));<]*/
 	ret.dir = vec_norm((t_vec){px, py, -1});
 	ret.orig = cam->orig;
 	ret.t = INFINITY;
 	return (ret);
 }
-/*t_ray	gen_ray(t_minirt *minirt, double x, double y)*/
-/*{*/
-	/*[>(void)minirt;<]*/
-	/*t_ray	ret;*/
-	/*double	aspect = WIDTH / (double)HEIGHT;*/
-	/*[>double	aspect = 16.0 / 9.0;<]*/
-	/*double	viewport_height = HEIGHT;*/
-	/*double	viewport_width = viewport_height * aspect;*/
-	/*double	focal = WIDTH/(2*tan(deg2rad(FOV * 0.5)));*/
-	/*[>double	focal = 1.0;<]*/
-	/*t_vec	orig = minirt->camera->orig;*/
-	/*[>t_vec	orig = {0,0,0};<]*/
-	/*t_vec	horiz = {viewport_width * 0.5, 0, 0};*/
-	/*t_vec	vert = {0, viewport_height * 0.5, 0};*/
-	/*t_vec	low_left_corner = vec_sub(orig, vec_sub(horiz, vec_sub(vert, (t_vec){0, 0, focal})));*/
-	/*double	u = x / (WIDTH - 1);*/
-	/*double	v = y / (HEIGHT - 1);*/
-	/*[>double	u = x - WIDTH /2;<]*/
-	/*[>double	v = y - HEIGHT /2;<]*/
 
-	/*ret.orig = minirt->camera->orig;*/
-	/*ret.dir = vec_norm(vec_add(low_left_corner, vec_add(vec_mul(horiz, u), vec_sub(vec_mul(vert, v), orig))));*/
-	/*[>printf("dir = (%f, %f, %f)\n", ret.dir.x, ret.dir.y, ret.dir.z);<]*/
+/*t_ray	gen_ray(t_minirt *rt, double x, double y)*/
+/*{*/
+	/*t_ray	ret;*/
+	/*double	u = x / (double)(WIDTH - 1);*/
+	/*double	v = y / (double)(HEIGHT - 1);*/
+
+	/*ret.orig = rt->camera->orig;*/
+	/*ret.dir = vec_sub(vec_add(vec_add(rt->camera->low_left_corner, */
+		/*vec_mul(rt->camera->horiz, u)),vec_mul(rt->camera->vert, v)), rt->camera->orig);*/
 	/*ret.t = INFINITY;*/
 	/*return (ret);*/
 /*}*/
@@ -85,11 +72,9 @@ void	inter(t_minirt *rt, double x, double y)
 		rt->ray.phit = vec_add(rt->ray.orig, \
 				vec_mul(rt->ray.dir, rt->ray.t));
 		color = calc_light((t_object *)nearest_obj, rt);
+		/*color = ((t_object *)nearest_obj)->mat.color;*/
 		put_color(rt->mlx, x, y, color);
 	}
-	/*if (rt->ray.t < INFINITY)*/
-		/*return (1);*/
-	/*return (0);*/
 }
 
 int	render(void *rt)

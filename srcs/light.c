@@ -7,15 +7,12 @@ static t_vec	reflect(t_vec I, t_vec N)
 
 static void	init_shadow_ray(t_light *light, t_minirt *rt, t_ray *L, t_vec *n)
 {
-	/*(void)n;*/
-	/*L->orig = rt->ray.phit;*/
 	L->orig = vec_add(rt->ray.phit, vec_mul(*n, 1e-4));
-	/*L->dir = vec_norm(vec_sub(L->orig, light->pos));*/
-	L->dir = vec_sub(light->pos, L->orig);
+	L->dir = vec_norm(vec_sub(light->pos, L->orig));
 	L->t = INFINITY;
 }
 
-static int	is_shaded(t_minirt *rt, t_light *light, t_vec *normal, t_object *nearest)
+static int	is_shaded(t_minirt *rt, t_light *light, t_vec *normal, t_object *self)
 {
 	t_list		*lst;
 	t_object	*obj;
@@ -23,19 +20,14 @@ static int	is_shaded(t_minirt *rt, t_light *light, t_vec *normal, t_object *near
 	t_ray		L;
 
 	lst = rt->obj_lst;
-	(void)nearest;
+	(void)self;
 	init_shadow_ray(light, rt, &L, normal);
 	tnear = vec_len(vec_sub(light->pos, L.orig));
-	/*if (vec_dot(vec_norm(L.dir), *normal) < 1e-4)*/
-		/*return (0);*/
 	while (lst)
 	{
 		obj = (t_object *)lst->content;
-		/*if (obj->intersect(obj->params, L) && pow(L->t - tnear, 2) == 0)*/
-		if (obj->intersect(obj->params, &L) && L.t < tnear)
+		if (obj != self && obj->intersect(obj->params, &L) && L.t < tnear)
 		{
-			/*if (nearest == obj)*/
-				/*printf("%f, %f, %f\n%f %f\n", ((t_material)obj->mat).color.r*255, ((t_material)obj->mat).color.g *255, ((t_material)obj->mat).color.b*255, L->t, tnear);*/
 			return (1);
 		}
 		lst = lst->next;
@@ -58,8 +50,6 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 	color = col_mul(obj->mat.color, AMBIENT);
 	while (tmp)
 	{
-		/*if (vec_dot(normal, (t_vec){0,0,-1}) < 0)*/
-			/*normal = vec_neg(normal);*/
 		int vis = !is_shaded(rt, (t_light *)tmp->content, &normal, obj);
 		/*vis = 1;*/
 		t_vec	light_dir = vec_norm(vec_sub(((t_light *)tmp->content)->pos, rt->ray.phit));
@@ -81,8 +71,8 @@ void	init_light(t_minirt *minirt)
 
 	light = malloc(sizeof(t_light));
 	light2 = malloc(sizeof(t_light));
-	light->pos = (t_vec){0, 0, 5};
-	light2->pos = (t_vec){5, 2, 2};
+	light->pos = (t_vec){0, 0, 2};
+	light2->pos = (t_vec){-2, 0, 2};
 	light->intens = 0.7;
 	light2->intens = 1.0;
 	/*ft_lstadd_back(&(minirt->light_lst), ft_lstnew((void *)light));*/

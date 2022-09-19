@@ -5,7 +5,7 @@ t_vec	get_norm_plane(t_ray *ray, void *ptr)
 	t_plane	*pl = (t_plane *)ptr;
 
 	(void)ray;
-	return (vec_norm(pl->normal));
+	return (pl->normal);
 }
 
 int	inter_plane(void *ptr, t_ray *ray)

@@ -54,7 +54,6 @@ typedef struct	s_sphere
 {
 	t_vec	orig;
 	double	r;
-	//int	color;
 }	t_sphere;
 
 typedef struct	s_plane
@@ -62,6 +61,15 @@ typedef struct	s_plane
 	t_vec	orig;
 	t_vec	normal;
 }	t_plane;
+
+typedef struct	s_cylinder
+{
+	t_vec	orig;
+	t_vec	dir;
+	double	d;
+	double	h;
+	//t_vec	normal;
+}	t_cylinder;
 
 typedef struct	s_light
 {
@@ -95,11 +103,10 @@ typedef struct	s_material
 
 typedef struct	s_object
 {
+	void		*params;
+	int		(*intersect)();
+	t_vec		(*get_normal)();
 	t_material	mat;
-	void	*params;
-	int	(*intersect)();
-	t_vec	(*get_normal)();
-	//t_color	color;
 }	t_object;
 
 typedef struct	s_list
@@ -116,7 +123,7 @@ typedef struct s_minirt
 	t_list		*light_lst;
 	t_ray		ray;
 	double		tnear;
-	double		t;
+	//double		t;
 }	t_minirt;
 
 //temp utils
@@ -166,10 +173,12 @@ void	init_light(t_minirt *minirt);
 void	inter(t_minirt *minirt, double x, double y);
 int	inter_sphere(void *ptr, t_ray *ray);
 int	inter_plane(void *ptr, t_ray *ray);
+int	inter_cylinder(void *ptr, t_ray *ray);
 
 //get_normal
 t_vec	get_norm_sphere(t_ray *ray, void *ptr);
 t_vec	get_norm_plane(t_ray *ray, void *ptr);
+t_vec	get_norm_cylinder(t_ray *ray, void *ptr);
 
 t_color	calc_light(t_object *obj, t_minirt *rt);
 #endif

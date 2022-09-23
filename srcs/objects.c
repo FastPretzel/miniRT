@@ -45,6 +45,7 @@ void	init_objs(t_minirt *minirt)
 	t_object	*obj7;
 	t_object	*obj8;
 	t_object	*obj9;
+	t_object	*obj10;
 
 	obj = malloc(sizeof(t_object));
 	obj2 = malloc(sizeof(t_object));
@@ -55,6 +56,7 @@ void	init_objs(t_minirt *minirt)
 	obj7 = malloc(sizeof(t_object));
 	obj8 = malloc(sizeof(t_object));
 	obj9 = malloc(sizeof(t_object));
+	obj10 = malloc(sizeof(t_object));
 
 	obj->params = init_sphere((t_vec){0, 0, -2}, 2);
 	obj2->params = init_sphere((t_vec){-1, 1, -2}, 2);//
@@ -66,7 +68,8 @@ void	init_objs(t_minirt *minirt)
 	obj7->params = init_plane((t_vec){-5, 0, 0}, (t_vec){1,0,0});
 	obj8->params = init_plane((t_vec){0, 0, -6}, (t_vec){0,0,1});
 
-	obj9->params = init_cylinder((t_vec){0, -1, -2}, (t_vec){0,1,0}, 3.f, 2.f);
+	obj9->params = init_cylinder((t_vec){1, -1, -2}, (t_vec){0,1,0}, 3.f, 2.f);
+	obj10->params = init_cylinder((t_vec){0, 0, -2}, (t_vec){0,1,0}, 2.f, 4.f);
 	
 	obj->intersect = inter_sphere;
 	obj2->intersect = inter_sphere;
@@ -79,6 +82,7 @@ void	init_objs(t_minirt *minirt)
 	obj8->intersect = inter_plane;
 
 	obj9->intersect = inter_cylinder;
+	obj10->intersect = inter_cylinder;
 
 	obj->get_normal = get_norm_sphere;
 	obj2->get_normal = get_norm_sphere;
@@ -91,6 +95,7 @@ void	init_objs(t_minirt *minirt)
 	obj8->get_normal = get_norm_plane;
 
 	obj9->get_normal = get_norm_cylinder;
+	obj10->get_normal = get_norm_cylinder;
 
 	obj->mat = (t_material){get_color(101, 0, 101),{0.6, 0.4},50.0};//purple sp
 	obj2->mat = (t_material){get_color(85, 205, 140),{0.6, 0.2},20.0};
@@ -103,14 +108,16 @@ void	init_objs(t_minirt *minirt)
 	obj8->mat = (t_material){get_color(200, 200, 0),{0.9, 0.1},40.0};
 
 	obj9->mat = (t_material){get_color(0, 200, 0),{0.9, 0.1},20.0};
+	obj10->mat = (t_material){get_color(0, 101, 101),{0.7, 0.2},50.0};
 
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj2));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj3));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj4));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj8));*/
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj9));
+	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj10));*/
 }

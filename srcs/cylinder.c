@@ -34,16 +34,16 @@ static int	intersect_caps(t_cylinder *cy, t_ray *ray)
 	cap.normal = cy->dir;
 	if (inter_plane((void *)(&cap), &cray) && 
 		vec_len(vec_sub(vec_add(cray.orig, 
-		vec_mul(cray.dir, cray.t)), cap.orig)) <= cy->d / 2)
+		vec_mul(cray.dir, cray.t)), cap.orig)) <= cy->d / 2 && cray.t < ray->t)
 	{
 		ray->t = cray.t;
 		return (1);
 	}
 	cap.orig = vec_sub(cy->orig, vec_mul(cy->dir, cy->h / 2));
 	cap.normal = vec_neg(cy->dir);
-	if (inter_plane((void *)(&cap), &cray) && vec_len(
-			vec_sub(vec_add(cray.orig, vec_mul(cray.dir, cray.t)), cap.orig))
-			<= cy->d / 2)
+	if (inter_plane((void *)(&cap), &cray) &&
+		vec_len(vec_sub(vec_add(cray.orig,
+		vec_mul(cray.dir, cray.t)), cap.orig)) <= cy->d / 2 && cray.t < ray->t)
 	{
 		ray->t = cray.t;
 		return (1);
@@ -102,10 +102,14 @@ int	inter_cylinder(void *ptr, t_ray *ray)
 	if (x1 < 0 && x2 < 0)
 		return (0);
 	t = fmin(x1, x2);
-	if (check_height(cyl, vec_add(ray->orig, vec_mul(ray->dir, t))) && (ray->t = t))
+	if (check_height(cyl, vec_add(ray->orig, vec_mul(ray->dir, t))) && t < ray->t)
+	{
+		ray->t = t;
 		return (1);
+	}
 	return (0);
 }
+//спроецировать луч на плоскость основания цилиндра и искать пересечение с кругом, если оно есть, то перевести координаты обратно в 3д
 /*int	inter_cylinder(void *ptr, t_ray *ray)*/
 /*{*/
 	/*double	a;*/

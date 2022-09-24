@@ -101,7 +101,10 @@ int	inter_cylinder(void *ptr, t_ray *ray)
 	x2 = (-b - det) / (2 * a);
 	if (x1 < 0 && x2 < 0)
 		return (0);
-	t = fmin(x1, x2);
+	/*t = fmin(x1, x2);*/
+	t = x2;
+	if (t < 0)
+		t = x1;
 	if (check_height(cyl, vec_add(ray->orig, vec_mul(ray->dir, t))) && t < ray->t)
 	{
 		ray->t = t;

@@ -26,7 +26,7 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	aspect = WIDTH / (double)HEIGHT;
 	px = (2 * (x + 0.5) / (double)WIDTH - 1) * scale * aspect;
 	py = (1 - 2 * (y + 0.5) / (double)HEIGHT) * scale;
-	/*[>ret.dir = vec_norm(look_at(cam, px, py));<]*/
+	/*ret.dir = vec_norm(look_at(cam, px, py));*/
 	ret.dir = vec_norm((t_vec){px, py, -1});
 	ret.orig = cam->orig;
 	ret.t = INFINITY;
@@ -50,7 +50,6 @@ void	inter(t_minirt *rt, double x, double y)
 {
 	t_list		*tmp;
 	t_object	*obj;
-	/*double		tnear;*/
 	void	*nearest_obj = 0;
 	t_color	color = {0, 0, 0};
 
@@ -77,25 +76,24 @@ void	inter(t_minirt *rt, double x, double y)
 	}
 }
 
-int	render(void *rt)
+int	render(void *ptr)
 {
 	int	x;
 	int	y;
-	t_minirt	*minirt;
+	t_minirt	*rt;
 
 	y = -1;
-	minirt = (t_minirt *)rt;
+	rt = (t_minirt *)ptr;
+	if (rt->keys->key_esc)
+		exit(0);
 	while (++y < HEIGHT)
 	{
 		x = -1;
 		while (++x < WIDTH)
-		{
-			/*if (inter(minirt, x, y, &color))*/
-				/*put_color(minirt->mlx, x, y, color);*/
-			inter(minirt, x, y);
-		}
+			inter(rt, x, y);
 	}
-	mlx_put_image_to_window(minirt->mlx->ptr, minirt->mlx->win, minirt->mlx->img, 0, 0);
+	mlx_put_image_to_window(rt->mlx->ptr, rt->mlx->win, \
+			rt->mlx->img, 0, 0);
 	return (0);
 }
 
@@ -108,14 +106,15 @@ int	main()
 	minirt.mlx = &mlx;
 	minirt.obj_lst = 0;
 	minirt.light_lst = 0;
+	init_keys(&minirt);
 	init_hooks(&minirt);
 	reset_img(&minirt);
 	init_camera(&minirt);
 	init_objs(&minirt);
 	init_light(&minirt);
 	render(&minirt);
-	/*mlx_loop_hook(mlx.ptr, &render, (void *)&minirt);*/
-	mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);
+	mlx_loop_hook(mlx.ptr, &render, (void *)&minirt);
+	/*mlx_put_image_to_window(mlx.ptr, mlx.win, mlx.img, 0, 0);*/
 	mlx_loop(mlx.ptr);
 	return (0);
 }

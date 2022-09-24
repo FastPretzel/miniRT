@@ -27,9 +27,7 @@ static int	is_shaded(t_minirt *rt, t_light *light, t_vec *normal, t_object *self
 	{
 		obj = (t_object *)lst->content;
 		if (obj != self && obj->intersect(obj->params, &L) && L.t < tnear)
-		{
 			return (1);
-		}
 		lst = lst->next;
 	}
 	return (0);
@@ -42,6 +40,7 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 	t_list	*tmp;
 	t_vec	normal;
 	t_color	color;
+	t_light	*light;
 
 	normal = obj->get_normal(&(rt->ray), obj->params);
 	tmp = rt->light_lst;
@@ -50,17 +49,19 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 	color = col_mul(obj->mat.color, AMBIENT);
 	while (tmp)
 	{
-		int vis = !is_shaded(rt, (t_light *)tmp->content, &normal, obj);
+		light = (t_light *)tmp->content;
+		int vis = !is_shaded(rt, light, &normal, obj);
 		/*vis = 1;*/
-		t_vec	light_dir = vec_norm(vec_sub(((t_light *)tmp->content)->pos, rt->ray.phit));
-		diff_int += vis * ((t_light *)tmp->content)->intens * 
-			fmax(0.f, vec_dot(light_dir, normal));
-		spec_int += vis * pow(fmax(0.f, vec_dot(reflect(light_dir, normal), 
-			vec_neg(rt->ray.dir))), obj->mat.spec_exp) * ((t_light *)tmp->content)->intens;
+		t_vec	light_dir = vec_norm(vec_sub(light->pos, rt->ray.phit));
+		diff_int = vis * light->intens * fmax(0.f, vec_dot(light_dir, normal));
+		spec_int = vis * pow(fmax(0.f, vec_dot(reflect(light_dir, normal), 
+			vec_neg(rt->ray.dir))), obj->mat.spec_exp) * light->intens;
+		color = col_add(color, col_mul_vec(light->color, col_add(col_mul(obj->mat.color,diff_int * 
+				obj->mat.albedo[0]), col_mul((t_color){1, 1, 1}, spec_int * obj->mat.albedo[1]))));
 		tmp = tmp->next;
 	}
-	color = col_add(color, col_add(col_mul(obj->mat.color,diff_int * 
-			obj->mat.albedo[0]), col_mul((t_color){1, 1, 1}, spec_int * obj->mat.albedo[1])));
+	/*color = col_add(color, col_add(col_mul(obj->mat.color,diff_int * */
+			/*obj->mat.albedo[0]), col_mul((t_color){1, 1, 1}, spec_int * obj->mat.albedo[1])));*/
 	return (color);
 }
 
@@ -73,6 +74,8 @@ void	init_light(t_minirt *minirt)
 	light2 = malloc(sizeof(t_light));
 	light->pos = (t_vec){0, 0, 2};
 	light2->pos = (t_vec){4, 2, 2};
+	light->color = get_color(255, 255, 255);
+	light2->color = get_color(255, 255, 255);
 	light->intens = 0.7;
 	light2->intens = 1.0;
 	/*ft_lstadd_back(&(minirt->light_lst), ft_lstnew((void *)light));*/

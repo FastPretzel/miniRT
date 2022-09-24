@@ -68,14 +68,15 @@ typedef struct	s_cylinder
 	t_vec	dir;
 	double	d;
 	double	h;
-	//t_vec	normal;
 }	t_cylinder;
 
-typedef struct	s_light
+typedef struct	s_cone
 {
-	t_vec	pos;
-	double	intens;
-}	t_light;
+	t_vec	orig;
+	t_vec	dir;
+	double	d;
+	double	h;
+}	t_cone;
 
 typedef struct s_mlx {
 	void	*ptr;
@@ -93,6 +94,13 @@ typedef struct	s_color
 	double	g;
 	double	b;
 }	t_color;
+
+typedef struct	s_light
+{
+	t_vec	pos;
+	t_color	color;
+	double	intens;
+}	t_light;
 
 typedef struct	s_material
 {
@@ -115,15 +123,20 @@ typedef struct	s_list
 	struct s_list	*next;
 }	t_list;
 
+typedef struct	s_keys
+{
+	int	key_esc;
+}	t_keys;
+
 typedef struct s_minirt
 {
 	t_mlx		*mlx;
+	t_keys		*keys;
 	t_camera	*camera;
 	t_list		*obj_lst;
 	t_list		*light_lst;
 	t_ray		ray;
 	double		tnear;
-	//double		t;
 }	t_minirt;
 
 //temp utils
@@ -131,13 +144,15 @@ t_color get_color(double r, double g, double b);
 int	get_int_color(int r, int g, int b);
 void	reset_img(t_minirt *minirt);
 
-void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
+//void	my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color);
 
 int	cross_exit(t_minirt *minirt);
 void	init_hooks(t_minirt *minirt);
+void	init_keys(t_minirt *rt);
+int	key_down(int keycode, t_keys *keys);
+int	key_up(int keycode, t_keys *keys);
 void	mlx_start(t_mlx *mlx);
-//int	render(t_minirt *minirt);
-//void	paint_black(t_minirt *minirt);
+//int	render(void *ptr);
 
 //lst_utils
 t_list	*ft_lstlast(t_list *lst);
@@ -163,6 +178,7 @@ void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
 void	put_color(t_mlx *mlx, int x, int y, t_color color);
 t_color	col_mul(t_color a, double b);
 t_color	col_add(t_color a, t_color b);
+t_color	col_mul_vec(t_color a, t_color b);
 
 void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);
@@ -174,11 +190,13 @@ void	inter(t_minirt *minirt, double x, double y);
 int	inter_sphere(void *ptr, t_ray *ray);
 int	inter_plane(void *ptr, t_ray *ray);
 int	inter_cylinder(void *ptr, t_ray *ray);
+int	inter_cone(void *ptr, t_ray *ray);
 
 //get_normal
 t_vec	get_norm_sphere(t_ray *ray, void *ptr);
 t_vec	get_norm_plane(t_ray *ray, void *ptr);
 t_vec	get_norm_cylinder(t_ray *ray, void *ptr);
+t_vec	get_norm_cone(t_ray *ray, void *ptr);
 
 t_color	calc_light(t_object *obj, t_minirt *rt);
 #endif

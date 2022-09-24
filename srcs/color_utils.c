@@ -24,6 +24,16 @@ t_color	col_mul(t_color a, double c)
 	return (ret);
 }
 
+t_color	col_mul_vec(t_color a, t_color b)
+{
+	t_color	ret;
+
+	ret.r = a.r * b.r;
+	ret.g = a.g * b.g;
+	ret.b = a.b * b.b;
+	return (ret);
+}
+
 t_color	col_add(t_color a, t_color b)
 {
 	t_color	ret;

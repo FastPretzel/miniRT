@@ -15,20 +15,17 @@ int	get_int_color(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-void	reset_img(t_minirt *minirt)
+void	reset_img(t_minirt *rt)
 {
-	/*int	size;*/
 	int	i;
 	int	j;
 
-	/*size = WIDTH * HEIGHT * (minirt->mlx->bits_per_pixel / 8);*/
-	/*while (size--)*/
-		/*minirt->mlx->addr[size] = 0;*/
 	i = -1;
 	while (++i < HEIGHT)
 	{
 		j = -1;
 		while (++j < WIDTH)
-			my_mlx_pixel_put(minirt->mlx, j, i, get_int_color(20, 20, 60));
+			/*my_mlx_pixel_put(rt->mlx, j, i, get_int_color(20, 20, 60));*/
+			put_color(rt->mlx, j, i, get_color(20, 20, 60));
 	}
 }

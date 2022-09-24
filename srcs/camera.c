@@ -5,7 +5,7 @@ static t_vec	init_orig()
 	t_vec	ret;
 
 	ret.x = 0;
-	ret.y = 1;
+	ret.y = 0.5;
 	ret.z = 2;
 	return (ret);
 }

@@ -9,11 +9,11 @@
 #include <string.h>
 #include <fcntl.h>
 
-#include <time.h>
-#include <float.h>
+//#include <time.h>
+//#include <float.h>
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 800
+#define HEIGHT 600
 
 //tmp defines
 #define FOV 90.0
@@ -41,13 +41,9 @@ typedef struct	s_camera
 	double	fov;
 	t_vec	right;
 	t_vec	up;
-
-	//t_vec	u;
-	//t_vec	v;
-	//t_vec	w;
-	//t_vec	horiz;
-	//t_vec	vert;
-	//t_vec	low_left_corner;
+	double	alpha;
+	double	beta;
+	double	gamma;
 }	t_camera;
 
 typedef struct	s_sphere
@@ -102,10 +98,17 @@ typedef struct	s_light
 	double	intens;
 }	t_light;
 
+//typedef struct	s_reflect
+//{
+	//t_vec	ref_dir;
+	//t_vec	ref_orig;
+	//t_color	ref_color;
+//}	t_reflect;
+
 typedef struct	s_material
 {
 	t_color	color;
-	double	albedo[2];
+	double	albedo[3];
 	double	spec_exp;
 }	t_material;
 
@@ -126,6 +129,12 @@ typedef struct	s_list
 typedef struct	s_keys
 {
 	int	key_esc;
+	int	key_w;
+	int	key_a;
+	int	key_s;
+	int	key_d;
+	int	key_space;
+	int	key_shift;
 }	t_keys;
 
 typedef struct s_minirt
@@ -150,7 +159,7 @@ int	cross_exit(t_minirt *minirt);
 void	init_hooks(t_minirt *minirt);
 void	init_keys(t_minirt *rt);
 int	key_down(int keycode, t_keys *keys);
-int	key_up(int keycode, t_keys *keys);
+//int	key_up(int keycode, t_keys *keys);
 void	mlx_start(t_mlx *mlx);
 //int	render(void *ptr);
 
@@ -186,7 +195,10 @@ void	init_light(t_minirt *minirt);
 
 //intersections
 //int	inter(t_minirt *minirt, double x, double y, t_color *color);
-void	inter(t_minirt *minirt, double x, double y);
+int	render(void *ptr);
+void	translate(t_minirt *rt);
+void	rotate(t_minirt *rt);
+//void	inter(t_minirt *minirt, double x, double y);
 int	inter_sphere(void *ptr, t_ray *ray);
 int	inter_plane(void *ptr, t_ray *ray);
 int	inter_cylinder(void *ptr, t_ray *ray);

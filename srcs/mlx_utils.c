@@ -29,8 +29,7 @@ int	cross_exit(t_minirt *minirt)
 
 void	init_hooks(t_minirt *rt)
 {
-	/*init_keys(rt);*/
 	mlx_hook(rt->mlx->win, 17, 0, cross_exit, rt);
 	mlx_hook(rt->mlx->win, 2, 0, key_down, rt->keys);
-	mlx_hook(rt->mlx->win, 3, 0, key_up, rt->keys);
+	/*mlx_hook(rt->mlx->win, 3, 0, key_up, rt->keys);*/
 }

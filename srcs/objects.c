@@ -85,7 +85,7 @@ void	init_objs(t_minirt *minirt)
 	obj9->params = init_cylinder((t_vec){1, -1, -2}, (t_vec){0,1,0}, 3.f, 2.f);
 	obj10->params = init_cylinder((t_vec){0, 0, -2}, (t_vec){0,1,0}, 2.f, 4.f);
 
-	obj11->params = init_cone((t_vec){0, 0, -2}, (t_vec){0,-1,0}, 2.f, 4.f);
+	obj11->params = init_cone((t_vec){0, 0, -2}, (t_vec){0,-1,0}, 2.f, 2.f);
 	
 	obj->intersect = inter_sphere;
 	obj2->intersect = inter_sphere;

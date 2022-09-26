@@ -20,7 +20,7 @@ static int	is_shaded(t_minirt *rt, t_light *light, t_vec *normal, t_object *self
 	t_ray		L;
 
 	lst = rt->obj_lst;
-	(void)self;
+	/*(void)self;*/
 	init_shadow_ray(light, rt, &L, normal);
 	tnear = vec_len(vec_sub(light->pos, L.orig));
 	while (lst)

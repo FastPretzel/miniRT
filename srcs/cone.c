@@ -4,19 +4,50 @@ t_vec	get_norm_cone(t_ray *ray, void *ptr)
 {
 	t_vec	normal;
 	t_cone	*cone = (t_cone *)ptr;
+	t_plane	cap;
+	t_ray	cray;
 
-	normal = vec_cross(vec_cross(cone->dir, vec_sub(ray->phit, cone->orig)), vec_sub(ray->phit, cone->orig));
+	cray.orig = cone->orig;
+	cray.dir = cone->dir;
+	cray.t = INFINITY;
+	cap.orig = ray->phit;
+	cap.normal = vec_neg(cone->dir);
+	if (inter_plane(((void *)&cap), &cray) && fabs(cray.t - cone->h) < 1e-5)
+		return (cone->dir);
+	normal = vec_cross(vec_cross(cone->dir, vec_sub(ray->phit, 
+		cone->orig)), vec_sub(ray->phit, cone->orig));
 	normal = vec_norm(normal);
 	return (normal);
-	//проекция вектора на ось это скалярное произведение вектора на един вектор
+}
+
+static int	intersect_cap(t_cone *cone, t_ray *ray)
+{
+	t_plane	cap;
+	t_ray	cray;
+
+	cray.orig = ray->orig;
+	cray.dir = ray->dir;
+	cray.t = INFINITY;
+	cap.orig = vec_add(cone->orig, vec_mul(cone->dir, cone->h));
+	cap.normal = cone->dir;
+	if (inter_plane((void *)(&cap), &cray) && 
+		vec_len(vec_sub(vec_add(cray.orig, 
+		vec_mul(cray.dir, cray.t)), cap.orig)) <= cone->d && cray.t < ray->t)
+	{
+		ray->t = cray.t;
+		return (1);
+	}
+	return (0);
 }
 
 int	reject_sh_cone(t_cone *cone, t_ray *ray, double t)
 {
 	t_vec	p;
+	double	hp;
 
 	p = vec_add(ray->orig, vec_mul(ray->dir, t));
-	if (vec_dot(vec_sub(p, cone->orig), cone->dir) > 0)
+	hp = vec_dot(vec_sub(p, cone->orig), cone->dir);
+	if (hp > 0 && hp <= cone->h)
 		return (ray->t = t);
 	return (0);
 }
@@ -36,6 +67,8 @@ int	inter_cone(void *ptr, t_ray *ray)
 	double	t;
 	double	alpha;
 
+	if (intersect_cap(cone, ray))
+		return (1);
 	v = ray->dir;
 	h = cone->dir;
 	w = vec_sub(ray->orig, cone->orig);
@@ -70,52 +103,3 @@ int	inter_cone(void *ptr, t_ray *ray)
 	}
 	return (0);
 }
-/*int	inter_cone(void *ptr, t_ray *ray)*/
-/*{*/
-	/*t_cone	*cone = (t_cone *)ptr;*/
-	/*double	rad;*/
-	/*double	a;*/
-	/*double	b;*/
-	/*double	c;*/
-	/*t_vec	co;*/
-	/*double	discr;*/
-	/*double	t1;*/
-	/*double	t2;*/
-	/*double	t;*/
-	
-	/*[>rad = atan((cone->d/2.0)/ cone->h);<]*/
-	/*rad = deg2rad(30.0);*/
-	/*co = vec_sub(cone->orig, ray->orig);*/
-	/*a = pow(vec_dot(ray->dir, cone->dir), 2) - pow(cos(rad), 2);*/
-	/*b = 2*(vec_dot(ray->dir, cone->dir)*vec_dot(co, cone->dir) -*/
-			/*vec_dot(ray->dir, co)*pow(cos(rad), 2));*/
-	/*c = pow(vec_dot(co, cone->dir), 2) - vec_dot(co,co)*pow(cos(rad), 2);*/
-	/*discr = pow(b, 2) - 4*a*c;*/
-	/*if (discr < 0)*/
-		/*return (0);*/
-	/*if (discr == 0)*/
-	/*{*/
-		/*t = -b/(2*a);*/
-		/*if (t > 0 && t < ray->t)*/
-		/*{*/
-			/*t_vec p = vec_add(ray->orig, vec_mul(ray->dir, t));*/
-			/*if (vec_dot(vec_sub(p, cone->orig), cone->dir) > 0)*/
-				/*return (t = ray->t);*/
-		/*}*/
-	/*}*/
-	/*else*/
-	/*{*/
-		/*t1 = (-b - sqrt(discr))/(2*a);*/
-		/*t2 = (-b + sqrt(discr))/(2*a);*/
-		/*t = fmin(t1, t2);*/
-		/*if (t < 0)*/
-			/*t = t2;*/
-		/*if (t > 0 && t < ray->t)*/
-		/*{*/
-			/*t_vec p = vec_add(ray->orig, vec_mul(ray->dir, t));*/
-			/*if (vec_dot(vec_sub(p, cone->orig), cone->dir) > 0)*/
-				/*return (t = ray->t);*/
-		/*}*/
-	/*}*/
-	/*return (0);*/
-/*}*/

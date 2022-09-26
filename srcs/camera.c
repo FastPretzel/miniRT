@@ -5,7 +5,7 @@ static t_vec	init_orig()
 	t_vec	ret;
 
 	ret.x = 0;
-	ret.y = 0.5;
+	ret.y = 0;
 	ret.z = 2;
 	return (ret);
 }
@@ -30,6 +30,9 @@ void	init_camera(t_minirt *minirt)
 	cam->dir = vec_norm(init_dir());
 	cam->right = vec_norm(vec_cross(cam->dir, (t_vec){0, 1, 0}));
 	cam->up = vec_norm(vec_cross(cam->right, cam->dir));
+	cam->alpha = 0;
+	cam->beta = 0;
+	cam->gamma = 0;
 	/*cam->w = vec_neg(cam->dir);*/
 	/*cam->u = vec_norm(vec_cross((t_vec){0,1,0}, cam->w));*/
 	/*cam->v = vec_cross(cam->w, cam->u);*/
@@ -42,8 +45,3 @@ void	init_camera(t_minirt *minirt)
 		/*vec_mul(cam->horiz, 0.5)), vec_mul(cam->vert, 0.5)), cam->w);*/
 	minirt->camera = cam;
 }
-
-/*t_vec	look_at(t_camera *cam)*/
-/*{*/
-	
-/*}*/

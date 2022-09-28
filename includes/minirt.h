@@ -18,6 +18,7 @@
 //tmp defines
 #define FOV 90.0
 #define AMBIENT 0.2
+#define DGR_DELTA 2.0
 
 typedef struct s_vec
 {
@@ -41,9 +42,9 @@ typedef struct	s_camera
 	double	fov;
 	t_vec	right;
 	t_vec	up;
-	double	alpha;
-	double	beta;
-	double	gamma;
+	//double	alpha;
+	//double	beta;
+	//double	gamma;
 }	t_camera;
 
 typedef struct	s_sphere
@@ -133,6 +134,12 @@ typedef struct	s_keys
 	int	key_a;
 	int	key_s;
 	int	key_d;
+	int	key_e;
+	int	key_q;
+	int	key_up;
+	int	key_down;
+	int	key_left;
+	int	key_right;
 	int	key_space;
 	int	key_shift;
 }	t_keys;
@@ -182,7 +189,7 @@ t_vec	vec_mat_mul(t_vec v, t_vec rows[3]);
 //other utils
 double	ft_min_double(double a, double b);
 double	deg2rad(double deg);
-void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
+//void	matr_mult(double a[4][4], double b[4][4], double res[4][4]);
 //void	put_color(t_rt *rt, t_img img, int x, int y);
 void	put_color(t_mlx *mlx, int x, int y, t_color color);
 t_color	col_mul(t_color a, double b);

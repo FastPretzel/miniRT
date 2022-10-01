@@ -27,32 +27,29 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	px = (2 * (x + 0.5) / (double)WIDTH - 1) * scale * aspect;
 	py = (1 - 2 * (y + 0.5) / (double)HEIGHT) * scale;
 	ret.dir = vec_norm(look_at(cam, px, py));
-	/*ret.dir = vec_norm((t_vec){px, py, -1});*/
 	ret.orig = cam->orig;
 	ret.t = INFINITY;
 	return (ret);
 }
 
-/*t_ray	gen_ray(t_minirt *rt, double x, double y)*/
-/*{*/
-	/*t_ray	ret;*/
-	/*double	u = x / (double)(WIDTH - 1);*/
-	/*double	v = y / (double)(HEIGHT - 1);*/
+static void	coloring(t_minirt *rt, double x, double y, void *nearest_obj)
+{
+	t_color		color;
 
-	/*ret.orig = rt->camera->orig;*/
-	/*ret.dir = vec_sub(vec_add(vec_add(rt->camera->low_left_corner, */
-		/*vec_mul(rt->camera->horiz, u)),vec_mul(rt->camera->vert, v)), rt->camera->orig);*/
-	/*ret.t = INFINITY;*/
-	/*return (ret);*/
-/*}*/
+	/*color = (t_vec){0, 0, 0};*/
+	rt->ray.phit = vec_add(rt->ray.orig, \
+			vec_mul(rt->ray.dir, rt->ray.t));
+	color = calc_light((t_object *)nearest_obj, rt);
+	put_color(rt->mlx, x, y, color);
+}
 
 static void	inter(t_minirt *rt, double x, double y)
 {
 	t_list		*tmp;
 	t_object	*obj;
-	void	*nearest_obj = 0;
-	t_color	color = {0, 0, 0};
+	void		*nearest_obj;
 
+	nearest_obj = 0;
 	rt->tnear = INFINITY;
 	tmp = rt->obj_lst;
 	rt->ray = gen_ray(rt, x, y);
@@ -67,13 +64,7 @@ static void	inter(t_minirt *rt, double x, double y)
 		tmp = tmp->next;
 	}
 	if (nearest_obj)
-	{
-		rt->ray.phit = vec_add(rt->ray.orig, \
-				vec_mul(rt->ray.dir, rt->ray.t));
-		color = calc_light((t_object *)nearest_obj, rt);
-		/*color = ((t_object *)nearest_obj)->mat.color;*/
-		put_color(rt->mlx, x, y, color);
-	}
+		coloring(rt, x, y, nearest_obj);
 }
 
 int	render(void *ptr)

@@ -136,11 +136,11 @@ void	init_objs(t_minirt *minirt)
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj2));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj3));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj4));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj5));
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj8));*/
-	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj9));
+	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj9));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj10));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj11));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj11));
 }

@@ -35,6 +35,14 @@ typedef struct s_ray
 	t_vec	phit;
 }	t_ray;
 
+typedef struct s_qtr
+{
+	double	x;
+	double	y;
+	double	z;
+	double	r;
+}	t_qtr;
+
 typedef struct	s_camera
 {
 	t_vec	orig;
@@ -99,17 +107,10 @@ typedef struct	s_light
 	double	intens;
 }	t_light;
 
-//typedef struct	s_reflect
-//{
-	//t_vec	ref_dir;
-	//t_vec	ref_orig;
-	//t_color	ref_color;
-//}	t_reflect;
-
 typedef struct	s_material
 {
 	t_color	color;
-	double	albedo[3];
+	double	albedo[2];
 	double	spec_exp;
 }	t_material;
 
@@ -200,11 +201,19 @@ void	init_camera(t_minirt *minirt);
 void	init_objs(t_minirt *minirt);
 void	init_light(t_minirt *minirt);
 
-//intersections
-//int	inter(t_minirt *minirt, double x, double y, t_color *color);
+//rt
 int	render(void *ptr);
 void	translate(t_minirt *rt);
 void	rotate(t_minirt *rt);
+
+//qtr utils
+void	neg_qtr(t_qtr *q, t_qtr *q_neg);
+t_qtr	*vec2qtr(t_vec *p);
+void	update_vec(t_qtr *pos, t_vec *p);
+double	degree(t_keys *keys);
+
+//intersections
+//int	inter(t_minirt *minirt, double x, double y, t_color *color);
 //void	inter(t_minirt *minirt, double x, double y);
 int	inter_sphere(void *ptr, t_ray *ray);
 int	inter_plane(void *ptr, t_ray *ray);

@@ -7,6 +7,7 @@ t_color get_color(double r, double g, double b)
 	ret.r = r / 255.0;
 	ret.g = g / 255.0;
 	ret.b = b / 255.0;
+	ret.transp = 0;
 	return (ret);
 }
 
@@ -25,7 +26,6 @@ void	reset_img(t_minirt *rt)
 	{
 		j = -1;
 		while (++j < WIDTH)
-			/*my_mlx_pixel_put(rt->mlx, j, i, get_int_color(20, 20, 60));*/
-			put_color(rt->mlx, j, i, get_color(20, 20, 60));
+			put_color(rt->mlx, j, i, get_color(0, 0, 0));
 	}
 }

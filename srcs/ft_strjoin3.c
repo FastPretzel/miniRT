@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/30 19:00:26 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/29 20:18:26 by eclown           ###   ########.fr       */
+/*   Created: 2021/10/18 19:25:12 by EClown            #+#    #+#             */
+/*   Updated: 2022/09/23 16:57:33 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-/*#include "scene_converter.h"*/
 
-int	main(int argc, char **argv)
+char	*ft_strjoin3(char *str1, char *str2, char *str3)
 {
-	t_minirt	*scene;
-	t_mlx		mlx;
+	char	*tmp;
+	char	*result;
 
-	if (argc != 2)
-		return (0);
-	scene = parse_scene(argv[1]);
-	mlx_start(&mlx);
-	scene->mlx = &mlx;
-	init_keys(scene);
-	init_hooks(scene);
-	printf("\e[38;5;141mREADY\e[0m\n");
-	mlx_loop_hook(mlx.ptr, &render, (void *)scene);
-	mlx_loop(mlx.ptr);
-	free_scene(scene);
-	return (0);
+	tmp = ft_strjoin(str1, str2);
+	if (! tmp)
+		return (NULL);
+	result = ft_strjoin(tmp, str3);
+	free(tmp);
+	return (result);
 }

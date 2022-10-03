@@ -132,7 +132,7 @@ void	init_objs(t_minirt *minirt)
 
 	obj11->mat = (t_material){get_color(0, 101, 101),{0.7, 0.2},50.0};
 
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj2));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj3));*/
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj4));*/
@@ -140,7 +140,7 @@ void	init_objs(t_minirt *minirt)
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj6));
 	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj7));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj8));*/
-	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj9));*/
+	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj9));
 	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj10));*/
-	ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj11));
+	/*ft_lstadd_back(&(minirt->obj_lst), ft_lstnew((void *)obj11));*/
 }

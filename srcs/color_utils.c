@@ -21,6 +21,7 @@ t_color	col_mul(t_color a, double c)
 	ret.r = a.r * c;
 	ret.g = a.g * c;
 	ret.b = a.b * c;
+	ret.transp = 0;
 	return (ret);
 }
 
@@ -31,6 +32,7 @@ t_color	col_mul_vec(t_color a, t_color b)
 	ret.r = a.r * b.r;
 	ret.g = a.g * b.g;
 	ret.b = a.b * b.b;
+	ret.transp = 0;
 	return (ret);
 }
 
@@ -41,5 +43,6 @@ t_color	col_add(t_color a, t_color b)
 	ret.r = fmin(1.0, a.r + b.r);
 	ret.g = fmin(1.0, a.g + b.g);
 	ret.b = fmin(1.0, a.b + b.b);
+	ret.transp = 0;
 	return (ret);
 }

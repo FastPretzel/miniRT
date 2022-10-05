@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 17:14:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/26 18:56:31 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 18:32:22 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ int	open_scene_file(char *filename, int *fd)
 	if (*fd == -1)
 		return (0);
 	return (1);
+}
+
+void	update_material_add_params(t_object_p *object, char *str)
+{
+	char	**args;
+	int		args_count;
+
+	str = ft_strdup(str);
+	replace_space_chars_to_space(str);
+	args = ft_split_new(str, ' ');
+	args_count = text_len(args);
+	object->mat->albedo[0] = ft_atod(args[args_count - 3]);
+	object->mat->albedo[1] = ft_atod(args[args_count - 2]);
+	object->mat->spec_exp = ft_atod(args[args_count - 1]);
+	free_text(args);
+	free(str);
 }

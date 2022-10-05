@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 17:14:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/10/05 14:34:58 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 18:32:09 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int			parse_error(int line_num, char *str);
 int			add_alight_to_scene(t_minirt_p *scene, char *str, int line_num);
 int			add_camera_to_scene(t_minirt_p *scene, char *str, int line_num);
 int			add_light_to_scene(t_minirt_p *scene, char *str, int line_num);
+int			are_there_add_params(char *str);
+void		update_material_add_params(t_object_p *object, char *str);
 
 int	get_object_count(t_object_p	**object_array)
 {
@@ -72,6 +74,14 @@ int	add_object_to_scene(t_minirt_p *scene, char *str, int line_num)
 		return (parse_error(line_num, "Wrong object identifier"));
 	if (new_object == NULL)
 		return (parse_error(line_num, "Object parse error. "));
+	if (are_there_add_params(str))
+		update_material_add_params(new_object, str);
+	else
+	{
+		new_object->mat->albedo[0] = ALBEDO_0;
+		new_object->mat->albedo[1] = ALBEDO_1;
+		new_object->mat->spec_exp = SPEC_EXP;
+	}
 	add_object_to_array(&(scene->objects), new_object);
 	return (0);
 }

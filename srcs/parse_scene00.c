@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 20:30:38 by eclown            #+#    #+#             */
-/*   Updated: 2022/10/05 14:27:26 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 18:30:36 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,14 @@ t_vec	*parse_norm_vector(char *str)
 		return (NULL);
 	}
 	return (vector);
+}
+
+int	get_expected_args_count(char **args)
+{
+	int	args_cont_exp;
+
+	args_cont_exp = 6;
+	if (ft_strncmp(args[0], "sp", 3) == 0 || ft_strncmp(args[0], "pl", 3) == 0)
+		args_cont_exp = 4;
+	return (args_cont_exp);
 }

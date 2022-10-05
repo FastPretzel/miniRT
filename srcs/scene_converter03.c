@@ -73,6 +73,8 @@ t_minirt	*parse_scene(char *filename)
 	t_minirt	*scene;
 
 	scene_p = parse_scene_p(filename);
+	if (scene_p == NULL)
+		return (NULL);
 	scene = convert_scene(scene_p);
 	free_scene_p(scene_p);
 	return (scene);

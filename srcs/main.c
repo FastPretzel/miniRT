@@ -21,6 +21,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	scene = parse_scene(argv[1]);
+	if (scene == NULL)
+		return (1);
 	mlx_start(&mlx);
 	scene->mlx = &mlx;
 	init_keys(scene);

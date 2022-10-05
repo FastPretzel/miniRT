@@ -34,16 +34,16 @@ double	degree(t_keys *keys)
 
 	deg = 0;
 	if (keys->key_s)
-		deg = deg2rad(DGR_DELTA/2);
+		deg = deg2rad(DGR_DELTA / 2);
 	else if (keys->key_w)
-		deg = deg2rad(-DGR_DELTA/2);
-	if (keys->key_a)
-		deg = deg2rad(DGR_DELTA/2);
-	else if (keys->key_d)
-		deg = deg2rad(-DGR_DELTA/2);
+		deg = deg2rad(-DGR_DELTA / 2);
+	if (keys->key_d)
+		deg = deg2rad(DGR_DELTA / 2);
+	else if (keys->key_a)
+		deg = deg2rad(-DGR_DELTA / 2);
 	if (keys->key_q)
-		deg = deg2rad(DGR_DELTA/2);
+		deg = deg2rad(DGR_DELTA / 2);
 	else if (keys->key_e)
-		deg = deg2rad(-DGR_DELTA/2);
+		deg = deg2rad(-DGR_DELTA / 2);
 	return (deg);
 }

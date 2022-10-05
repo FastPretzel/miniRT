@@ -1,12 +1,11 @@
 NAME = minirt
 NAME_B = minirt_bonus
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g -fsanitize=address#-Ofast
-FILES = main.c	vec_utils.c	mlx_utils.c\
-	camera.c	utils.c\
-	lst_utils.c	sphere.c	light.c\
-	color_utils.c	temp_utils.c	plane.c\
-	cylinder.c	cone.c		keys.c\
+CFLAGS = -Wall -Wextra -Werror -Iincludes -Ilibft/includes #-g -fsanitize=address#-Ofast
+FILES = main.c	vec_utils00.c	vec_utils01.c	mlx_utils.c\
+	utils.c	color_utils.c	sphere.c\
+	light.c	plane.c	cylinder.c\
+	cone00.c	cone01.c	keys.c\
 	translate.c	rotate.c	render.c\
 	rotate_utils.c	get_next_line.c		get_next_line_utils.c	ft_split_new.c		ft_strjoin3.c	\
 	common_funcs0.c			common_funcs1.c			common_funcs2.c			common_funcs3.c			\
@@ -15,8 +14,6 @@ FILES = main.c	vec_utils.c	mlx_utils.c\
 	parse_scene08.c			parse_scene09.c			parse_scene10.c			parse_scene11.c			\
 	scene_converter00.c		scene_converter01.c		scene_converter02.c		scene_converter03.c		\
 	parser_free_scene01.c
-
-#FILES_B
 
 VPATH = srcs/\
 		srcs_bonus/
@@ -38,7 +35,7 @@ NB = $(words $(FILES))
 INDEX = 0
 
 objs/%.o : %.c Makefile $(HEADERS)
-	@$(CC) $(CFLAGS) -Imlx -I$(LIBFT_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -Imlx -c $< -o $@
 	@$(eval PERCENT=$(shell expr $(INDEX) '*' 100 / $(NB)))
 	@$(eval PROGRESS=$(shell expr $(INDEX) '*' 30 / $(NB)))
 	@printf "\r\033[38;5;87mMAKE MINIRT %2d%%\033[0m \033[48;5;32m%*s\033[0m %s\033[K" $(PERCENT) $(PROGRESS) "" $(notdir $@)

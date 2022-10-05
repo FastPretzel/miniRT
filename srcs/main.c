@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
-/*#include "scene_converter.h"*/
 
 int	main(int argc, char **argv)
 {
@@ -19,8 +18,16 @@ int	main(int argc, char **argv)
 	t_mlx		mlx;
 
 	if (argc != 2)
+	{
+		printf("\e[1;41mERROR ARG\e[0m\n");
 		return (0);
+	}
 	scene = parse_scene(argv[1]);
+	if (!scene)
+	{
+		printf("\e[1;41mERROR SCENE\e[0m\n");
+		return (0);
+	}
 	mlx_start(&mlx);
 	scene->mlx = &mlx;
 	init_keys(scene);

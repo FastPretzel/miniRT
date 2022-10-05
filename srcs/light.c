@@ -23,10 +23,10 @@ static void	init_shadow_ray(t_light *light, t_minirt *rt, t_ray *L, t_vec *n)
 static int	is_shaded(t_minirt *rt, t_light *light,
 		t_vec *normal, t_object *self)
 {
-	int		i;
 	t_object	**obj;
-	double		tnear;
 	t_ray		l;
+	double		tnear;
+	int			i;
 
 	obj = rt->objects;
 	init_shadow_ray(light, rt, &l, normal);
@@ -34,7 +34,8 @@ static int	is_shaded(t_minirt *rt, t_light *light,
 	i = -1;
 	while (obj[++i])
 	{
-		if (obj[i] != self && obj[i]->intersect(obj[i]->params, &l) && l.t < tnear)
+		if (obj[i] != self && obj[i]->intersect(obj[i]->params, &l) && \
+				l.t < tnear)
 			return (1);
 	}
 	return (0);
@@ -59,7 +60,7 @@ static void	calc_vars(t_vars *v, t_light *light, t_minirt *rt, t_object *obj)
 
 t_color	calc_light(t_object *obj, t_minirt *rt)
 {
-	int	i;
+	int		i;
 	t_vars	vars;
 	t_light	**lights;
 
@@ -70,8 +71,7 @@ t_color	calc_light(t_object *obj, t_minirt *rt)
 	if (rt->alight)
 		vars.color = col_mul(obj->mat.color, rt->alight->ratio);
 	else
-		vars.color = (t_color){0,0,0};
-	/*vars.color = col_mul(obj->mat.color, AMBIENT);*/
+		vars.color = (t_color){0, 0, 0};
 	i = -1;
 	while (lights[++i])
 	{

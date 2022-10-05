@@ -2,6 +2,8 @@
 
 typedef struct s_quad
 {
+	t_vec	cx;
+	t_vec	cy;
 	double	t;
 	double	a;
 	double	b;
@@ -86,22 +88,26 @@ t_vec	get_norm_cylinder(t_ray *ray, void *ptr)
 	return (vec_norm(vec_sub(po, vec_mul(cy->dir, vec_dot(cy->dir, po)))));
 }
 
+static void	fill_quad(t_quad *q, t_cylinder *cyl, t_ray *ray)
+{
+	q->cx = vec_cross(ray->dir, cyl->dir);
+	q->cy = vec_cross(cyl->dir, vec_sub(cyl->orig, ray->orig));
+	q->a = vec_dot(q->cx, q->cx);
+	q->b = 2 * vec_dot(q->cx, q->cy);
+	q->c = vec_dot(q->cy, q->cy) - (pow(cyl->d / 2, 2) * \
+			vec_dot(cyl->dir, cyl->dir));
+	q->det = pow(q->b, 2) - 4 * q->a * q->c;
+}
+
 int	inter_cylinder(void *ptr, t_ray *ray)
 {
 	t_cylinder	*cyl;
-	t_vec		cx;
-	t_vec		cy;
 	t_quad		q;
 
 	cyl = (t_cylinder *)ptr;
 	if (intersect_caps(cyl, ray))
 		return (1);
-	cx = vec_cross(ray->dir, cyl->dir);
-	cy = vec_cross(cyl->dir, vec_sub(cyl->orig, ray->orig));
-	q.a = vec_dot(cx, cx);
-	q.b = 2 * vec_dot(cx, cy);
-	q.c = vec_dot(cy, cy) - (pow(cyl->d / 2, 2) * vec_dot(cyl->dir, cyl->dir));
-	q.det = pow(q.b, 2) - 4 * q.a * q.c;
+	fill_quad(&q, cyl, ray);
 	if (q.det < 0)
 		return (0);
 	q.det = sqrt(q.det);

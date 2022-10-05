@@ -11,3 +11,17 @@ double	ft_min_double(double a, double b)
 		return (a);
 	return (b);
 }
+
+void	reset_img(t_minirt *rt)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	while (++i < HEIGHT)
+	{
+		j = -1;
+		while (++j < WIDTH)
+			put_color(rt->mlx, j, i, (t_color){0, 0, 0});
+	}
+}

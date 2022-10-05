@@ -6,18 +6,18 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 20:07:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/26 18:56:11 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:29:45 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 t_color_p		*parse_color(char *str);
-t_vec		*parse_coord(char *str);
-t_alight_p	*create_alight(float ratio, t_color_p *color);
-t_vec		*create_coord(float x, float y, float z);
-t_camera_p	*create_camera(t_vec *vp, t_vec *vector, double fov);
-t_vec		*parse_norm_vector(char *str);
+t_vec			*parse_coord(char *str);
+t_alight_p		*create_alight(float ratio, t_color_p *color);
+t_vec			*create_coord(float x, float y, float z);
+t_camera_p		*create_camera(t_vec *vp, t_vec *vector, double fov);
+t_vec			*parse_norm_vector(char *str);
 
 void	*file_format_error(char *str_err)
 {
@@ -30,7 +30,7 @@ void	*file_format_error(char *str_err)
 int	check_alight_args(char **args)
 {
 	t_color_p	*color;
-	float	ratio;
+	float		ratio;
 
 	if (text_len(args) != 3)
 		return (0);

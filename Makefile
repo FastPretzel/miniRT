@@ -9,11 +9,12 @@ FILES = main.c	vec_utils.c	mlx_utils.c\
 	cylinder.c	cone.c		keys.c\
 	translate.c	rotate.c	render.c\
 	rotate_utils.c	get_next_line.c		get_next_line_utils.c	ft_split_new.c		ft_strjoin3.c	\
-	common_funcs0.c		common_funcs1.c			common_funcs2.c		common_funcs3.c	\
-	parse_scene00.c		parse_scene01.c			parse_scene02.c		parse_scene03.c	\
-	parse_scene04.c		parse_scene05.c			parse_scene06.c		parse_scene07.c	\
-	parse_scene08.c		parse_scene09.c			parse_scene10.c		parse_scene11.c	\
-	scene_converter00.c	parser_free_scene01.c
+	common_funcs0.c			common_funcs1.c			common_funcs2.c			common_funcs3.c			\
+	parse_scene00.c			parse_scene01.c			parse_scene02.c			parse_scene03.c			\
+	parse_scene04.c			parse_scene05.c			parse_scene06.c			parse_scene07.c			\
+	parse_scene08.c			parse_scene09.c			parse_scene10.c			parse_scene11.c			\
+	scene_converter00.c		scene_converter01.c		scene_converter02.c		scene_converter03.c		\
+	parser_free_scene01.c
 
 #FILES_B
 

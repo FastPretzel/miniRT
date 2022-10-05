@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 13:51:29 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/24 19:11:57 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:27:41 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	add_light_to_array(t_light_p ***array, t_light_p *new_light)
 {
 	t_light_p	**new_array;
 	t_light_p	**old_array;
-	int		i;
+	int			i;
 
 	old_array = *array;
 	i = get_light_count(old_array);

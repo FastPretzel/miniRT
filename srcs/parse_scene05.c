@@ -6,21 +6,21 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 18:46:35 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/24 19:11:57 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:30:40 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 t_color_p		*parse_color(char *str);
-t_vec		*parse_coord(char *str);
-t_vec		*parse_norm_vector(char *str);
+t_vec			*parse_coord(char *str);
+t_vec			*parse_norm_vector(char *str);
 
 int	check_base_object_args(char **args)
 {
-	int		args_count;
+	int			args_count;
 	t_color_p	*color;
-	t_vec	*coord;
+	t_vec		*coord;
 
 	args_count = text_len(args);
 	if (args_count < 4)

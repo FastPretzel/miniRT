@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 17:14:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/23 17:33:32 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:34:58 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	is_object_in_str(char *str)
 	int	result;
 
 	result = ! (ft_strncmp(str, "sp ", 3));
-	result = result || ! (ft_strncmp(str, "pl ", 3));
-	result = result || ! (ft_strncmp(str, "cy ", 3));
-	result = result || ! (ft_strncmp(str, "cn ", 3));
+	result = (result || ! (ft_strncmp(str, "pl ", 3)));
+	result = (result || ! (ft_strncmp(str, "cy ", 3)));
+	result = (result || ! (ft_strncmp(str, "cn ", 3)));
 	return (result);
 }
 

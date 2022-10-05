@@ -6,7 +6,7 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 20:30:38 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/26 18:56:36 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:27:26 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	check_scene_file_extension(char *filename)
 
 t_minirt_p	*parse_scene_p(char *filename)
 {
-	int		fd;
-	char	*str;
+	int			fd;
+	char		*str;
 	t_minirt_p	*scene;
-	int		parse_error;
-	int		line_num;
+	int			parse_error;
+	int			line_num;
 
 	if (! open_scene_file(filename, &fd))
 		return (error_open_file(filename));
@@ -57,22 +57,6 @@ t_minirt_p	*parse_scene_p(char *filename)
 	}
 	return (scene);
 }
-
-/*	TODO DELETE
-	t_object_p	*create_object(enum e_obj_type type, t_vec *coord,
-	t_color_p *color, void *params)
-{	
-	t_object_p	*obj;
-
-	obj = malloc(sizeof(obj));
-	if (! obj)
-		exit_error("malloc error in create_object");
-	obj->type = type;
-	obj->coord = coord;
-	obj->color = color;
-	obj->params = params;
-	return (obj);
-}*/
 
 t_camera_p	*create_camera(t_vec *vp, t_vec *vector, double fov)
 {

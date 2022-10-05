@@ -6,14 +6,14 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 16:07:54 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/29 20:03:51 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:29:01 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 t_color_p	*create_trgb(int transp, int r, int g, int b);
-t_vec	*create_coord(float x, float y, float z);
+t_vec		*create_coord(float x, float y, float z);
 
 t_sphere_p	*create_sphere_data(double r, t_vec *orig)
 {
@@ -42,9 +42,9 @@ t_plane_p	*create_plane_data(t_vec *vector, t_vec *orig)
 }
 
 t_cylinder_p	*create_cylinder_data(t_vec *orig,
-									  double diam,
-									  double h,
-									  t_vec *vector)
+									double diam,
+									double h,
+									t_vec *vector)
 {
 	t_cylinder_p	*data;
 
@@ -65,9 +65,9 @@ ex: 0,5,100,35
 t_color_p	*parse_color(char *str)
 {
 	t_color_p	*color;
-	char	**params;
-	int		count;
-	int		transp;
+	char		**params;
+	int			count;
+	int			transp;
 
 	if (str == NULL)
 		return (NULL);

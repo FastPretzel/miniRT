@@ -6,22 +6,22 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 17:45:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/09/24 19:11:57 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 14:30:14 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 t_color_p	*parse_color(char *str);
-t_vec	*parse_coord(char *str);
+t_vec		*parse_coord(char *str);
 t_light_p	*create_light(t_vec *point, float brightness, t_color_p *color);
 
 int	check_light_args(char **args)
 {
 	t_color_p	*color;
-	t_vec	*coord;
-	float	ratio;
-	int		args_count;
+	t_vec		*coord;
+	float		ratio;
+	int			args_count;
 
 	args_count = text_len(args);
 	if (args_count != 3 && args_count != 4)
@@ -46,7 +46,7 @@ int	check_light_args(char **args)
 
 t_light_p	*parse_light(char *str)
 {
-	char	**bloks;
+	char		**bloks;
 	t_light_p	*light;
 	t_color_p	*color;
 
@@ -92,9 +92,9 @@ void	*error_open_file(char *filename)
 }
 
 t_cone_p	*create_cone_data(t_vec *orig,
-							  double diam,
-							  double h,
-							  t_vec *vector)
+							double diam,
+							double h,
+							t_vec *vector)
 {
 	t_cylinder_p	*data;
 

@@ -10,8 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*#include "scene_converter.h"*/
-#include "minirt.h"
+#include "../includes/minirt.h"
+
+t_color convert_color(t_color_p *in)
+{
+	t_color out;
+
+	out.r = (double) in->r / 255;
+	out.g = (double) in->g / 255;
+	out.b = (double) in->b / 255;
+	return (out);
+}
 
 t_alight	*convert_alight(t_alight_p *in)
 {
@@ -23,7 +32,7 @@ t_alight	*convert_alight(t_alight_p *in)
 	if (! out)
 		exit_error("Malloc error in convert_alight");
 	out->ratio = in->ratio;
-	out->color = *(in->color);
+	out->color = convert_color(in->color);
 	return (out);
 }
 
@@ -37,7 +46,10 @@ t_camera	*convert_camera(t_camera_p *in)
 	if (! out)
 		exit_error("Malloc error in convert_camera");
 	out->orig = *(in->orig);
-	out->dir = *(in->dir);
+	out->dir = vec_norm(*(in->dir));
+	out->right = vec_norm(vec_cross(out->dir, (t_vec){0, 1, 0}));
+	out->up = vec_norm(vec_cross(out->right, out->dir));
+	out->fov = in->fov;
 	return (out);
 }
 
@@ -52,7 +64,7 @@ t_light	*convert_light(t_light_p *in)
 		exit_error("Malloc error in convert_light");
 	out->pos = *(in->pos);
 	out->intens = in->intens;
-	out->color = *(in->color);
+	out->color = convert_color(in->color);
 	return (out);
 }
 
@@ -60,18 +72,19 @@ t_material	convert_material(t_material_p *in)
 {
 	t_material	out;
 
-	out.color = *(in->color);
-	out.albedo[0] = in->albedo[0];
-	out.albedo[1] = in->albedo[1];
-	out.albedo[2] = in->albedo[2];
+	out.color = convert_color(in->color);
+	out.albedo[0] = 0.6;
+	out.albedo[1] = 0.3;
+	out.spec_exp = 50;
 	return (out);
 }
 
 //TODO MOVE
-void	free_material(t_material_p *mat);
+void		free_material(t_material_p *mat);
 t_sphere	*convert_sphere(t_sphere_p *in);
-t_plane	*convert_plane(t_plane_p *in);
+t_plane		*convert_plane(t_plane_p *in);
 t_cylinder	*convert_cylinder(t_cylinder_p *in);
+t_cone		*convert_cone(t_cone_p *in);
 
 t_object	*convert_object(t_object_p *in)
 {
@@ -100,6 +113,12 @@ t_object	*convert_object(t_object_p *in)
 		out->params = convert_cylinder((t_cylinder_p *) in->params);
 		out->intersect = inter_cylinder;
 		out->get_normal = get_norm_cylinder;
+	}
+	else if (in->type == CONE)
+	{
+		out->params = convert_cone((t_cone_p *) in ->params);
+		out->intersect = inter_cone;
+		out->get_normal = get_norm_cone;
 	}
 	out->mat = convert_material(in->mat);
 	return (out);
@@ -141,6 +160,20 @@ t_cylinder	*convert_cylinder(t_cylinder_p *in)
 	out = ft_calloc(1, sizeof(t_cylinder));
 	if (! out)
 		exit_error("Malloc error in convert_cylinder");
+	out->orig = *(in->orig);
+	out->dir = *(in->dir);
+	out->d = in->d;
+	out->h = in->h;
+	return (out);
+}
+
+t_cone	*convert_cone(t_cone_p *in)
+{
+	t_cylinder	*out;
+
+	out = ft_calloc(1, sizeof(t_cone));
+	if (! out)
+		exit_error("Malloc error in convert_cone");
 	out->orig = *(in->orig);
 	out->dir = *(in->dir);
 	out->d = in->d;
@@ -217,3 +250,4 @@ t_minirt	*parse_scene(char *filename)
 	free_scene_p(scene_p);
 	return (scene);
 }
+

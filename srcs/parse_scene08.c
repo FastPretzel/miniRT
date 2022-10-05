@@ -61,7 +61,7 @@ void	free_object(t_object_p *object)
 	}
 	if (object->type == PLANE && object->params)
 		free_t_plane_data(object->params);
-	if (object->type == CYLINDER && object->params)
+	if ((object->type == CYLINDER || object->type == CONE) && object->params)
 		free_t_cylinder_data(object->params);
 	free(object);
 }

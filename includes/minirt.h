@@ -17,7 +17,7 @@
 #  define IS_BONUS_PART 1
 # endif
 
-# include	"libft.h"
+# include	"../libft/libft.h"
 # include	<stddef.h>
 # include	<stdarg.h>
 # include	<stdio.h>
@@ -54,7 +54,8 @@ enum e_obj_type
 {
 	SPHERE,
 	PLANE,
-	CYLINDER
+	CYLINDER,
+	CONE
 };
 
 typedef struct s_qtr
@@ -67,10 +68,9 @@ typedef struct s_qtr
 
 typedef struct s_color
 {
-	int	r;
-	int	g;
-	int	b;
-	int	transp;
+	double 	r;
+	double 	g;
+	double 	b;
 }	t_color;
 
 typedef struct s_vec
@@ -82,17 +82,25 @@ typedef struct s_vec
 
 /*--------------------------START MODIFIED STRUCTS--------------------------*/
 
+typedef struct s_color_p
+{
+	int	transp;
+	int	r;
+	int	g;
+	int	b;
+}	t_color_p;
+
 typedef struct s_alight_p
 {
 	float	ratio;
-	t_color	*color;
+	t_color_p	*color;
 }	t_alight_p;
 
 typedef struct s_camera_p
 {
 	t_vec			*orig;
 	t_vec			*dir;
-	unsigned int	fov;
+	double			fov;
 	t_vec			right;
 	t_vec			up;
 }	t_camera_p;
@@ -101,13 +109,13 @@ typedef struct s_light_p
 {
 	t_vec	*pos;
 	double	intens;
-	t_color	*color;
+	t_color_p	*color;
 }	t_light_p;
 
 typedef struct s_material_p
 {
-	t_color	*color;
-	double	albedo[3];
+	t_color_p	*color;
+	double	albedo[2];
 	double	spec_exp;
 }	t_material_p;
 
@@ -137,6 +145,8 @@ typedef struct s_cylinder_data_p
 	double	d;
 	double	h;
 }	t_cylinder_p;
+
+typedef t_cylinder_p t_cone_p;
 
 /*-------------------------- END MODIFIED STRUCTS --------------------------*/
 
@@ -178,7 +188,7 @@ typedef struct s_camera
 {
 	t_vec			orig;
 	t_vec			dir;
-	unsigned int	fov;
+	double	fov;
 	t_vec			right;
 	t_vec			up;
 }	t_camera;
@@ -193,7 +203,7 @@ typedef struct s_light
 typedef struct s_material
 {
 	t_color	color;
-	double	albedo[3];
+	double	albedo[2];
 	double	spec_exp;
 }	t_material;
 
@@ -226,7 +236,7 @@ typedef struct s_cylinder_data
 	double	h;
 }	t_cylinder;
 
-typedef	t_cylinder	t_cone;
+typedef t_cylinder t_cone;
 
 typedef struct s_mlx {
 	void	*ptr;

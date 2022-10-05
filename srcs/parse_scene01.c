@@ -14,7 +14,7 @@
 
 int	get_light_count(t_light_p	**lights);
 
-t_alight_p	*create_alight(float ratio, t_color *color)
+t_alight_p	*create_alight(float ratio, t_color_p *color)
 {
 	t_alight_p	*alight;
 
@@ -39,11 +39,11 @@ t_vec	*create_coord(float x, float y, float z)
 	return (coord);
 }
 
-t_color	*create_trgb(int transp, int r, int g, int b)
+t_color_p	*create_trgb(int transp, int r, int g, int b)
 {
-	t_color	*rgb;
+	t_color_p	*rgb;
 
-	rgb = malloc(sizeof(t_color));
+	rgb = malloc(sizeof(t_color_p));
 	if (! rgb)
 		exit_error("malloc error in create_trgb");
 	rgb->transp = transp;
@@ -77,7 +77,7 @@ void	add_light_to_array(t_light_p ***array, t_light_p *new_light)
 	*array = new_array;
 }
 
-t_light_p	*create_light(t_vec *point, float brightness, t_color *color)
+t_light_p	*create_light(t_vec *point, float brightness, t_color_p *color)
 {
 	t_light_p	*light;
 

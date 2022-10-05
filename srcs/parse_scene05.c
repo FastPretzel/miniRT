@@ -12,14 +12,14 @@
 
 #include "minirt.h"
 
-t_color		*parse_color(char *str);
+t_color_p		*parse_color(char *str);
 t_vec		*parse_coord(char *str);
 t_vec		*parse_norm_vector(char *str);
 
 int	check_base_object_args(char **args)
 {
 	int		args_count;
-	t_color	*color;
+	t_color_p	*color;
 	t_vec	*coord;
 
 	args_count = text_len(args);

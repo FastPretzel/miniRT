@@ -7,7 +7,6 @@ t_color get_color(double r, double g, double b)
 	ret.r = r / 255.0;
 	ret.g = g / 255.0;
 	ret.b = b / 255.0;
-	ret.transp = 0;
 	return (ret);
 }
 

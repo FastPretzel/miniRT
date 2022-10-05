@@ -22,7 +22,7 @@ t_ray	gen_ray(t_minirt *minirt, double x, double y)
 	t_ray	ret;
 
 	cam = minirt->camera;
-	scale = tan(deg2rad((double)cam->fov * 0.5));
+	scale = tan(deg2rad(cam->fov * 0.5));
 	aspect = WIDTH / (double)HEIGHT;
 	px = (2 * (x + 0.5) / (double)WIDTH - 1) * scale * aspect;
 	py = (1 - 2 * (y + 0.5) / (double)HEIGHT) * scale;
@@ -39,33 +39,29 @@ static void	coloring(t_minirt *rt, double x, double y, void *nearest_obj)
 	rt->ray.phit = vec_add(rt->ray.orig, \
 			vec_mul(rt->ray.dir, rt->ray.t));
 	color = calc_light((t_object *)nearest_obj, rt);
-	/*printf("%d,%d,%d,%d\n", color.r, color.g, color.b, color.transp);*/
+	/*printf("%f,%f,%f\n", color.r, color.g, color.b);*/
 	/*calc_light((t_object *)nearest_obj, rt, &color);*/
 	put_color(rt->mlx, x, y, color);
 }
 
 static void	inter(t_minirt *rt, double x, double y)
 {
-	/*t_list		*tmp;*/
 	t_object	**obj;
 	void		*nearest_obj;
 	int		i;
 
 	nearest_obj = 0;
 	rt->tnear = INFINITY;
-	/*tmp = rt->obj_lst;*/
 	obj = rt->objects;
 	rt->ray = gen_ray(rt, x, y);
 	i = -1;
 	while (obj[++i])
 	{
-		/*obj = (t_object *)tmp->content;*/
 		if (obj[i]->intersect(obj[i]->params, &(rt->ray)) && rt->ray.t < rt->tnear)
 		{
 			rt->tnear = rt->ray.t;
 			nearest_obj = obj[i];
 		}
-		/*tmp = tmp->next;*/
 	}
 	if (nearest_obj)
 		coloring(rt, x, y, nearest_obj);

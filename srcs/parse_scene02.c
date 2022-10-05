@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_color	*create_trgb(int transp, int r, int g, int b);
+t_color_p	*create_trgb(int transp, int r, int g, int b);
 t_vec	*create_coord(float x, float y, float z);
 
 t_sphere_p	*create_sphere_data(double r, t_vec *orig)
@@ -62,9 +62,9 @@ t_cylinder_p	*create_cylinder_data(t_vec *orig,
 str: str with 3 or 4 integers separated by comma
 ex: 0,5,100,35
 */
-t_color	*parse_color(char *str)
+t_color_p	*parse_color(char *str)
 {
-	t_color	*color;
+	t_color_p	*color;
 	char	**params;
 	int		count;
 	int		transp;

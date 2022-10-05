@@ -14,7 +14,7 @@
 
 void			add_light_to_array(t_light_p ***array, t_light_p *new_light);
 t_alight_p		*parse_alight(char *str);
-t_light_p			*parse_light(char *str);
+t_light_p		*parse_light(char *str);
 t_camera_p		*parse_camera(char *str);
 
 int	parse_error(int line_num, char *str)

@@ -16,13 +16,13 @@ char			*get_file_name(char *str);
 t_vec			*parse_coord(char *str);
 int				check_norm_vector(t_vec *vector);
 void			*error_open_file(char *filename);
-t_minirt_p			*create_scene(void);
+t_minirt_p		*create_scene(void);
 int				open_scene_file(char *filename, int *fd);
 int				parse_str_scene(t_minirt_p *scene, char *str, int line_num);
 
 int	check_scene_file_extension(char *filename)
 {
-	int	strlen;
+	size_t	strlen;
 
 	strlen = ft_strlen(filename);
 	if (filename[strlen - 1] != 't' || filename[strlen - 2] != 'r')
@@ -60,7 +60,7 @@ t_minirt_p	*parse_scene_p(char *filename)
 
 /*	TODO DELETE
 	t_object_p	*create_object(enum e_obj_type type, t_vec *coord,
-	t_color *color, void *params)
+	t_color_p *color, void *params)
 {	
 	t_object_p	*obj;
 
@@ -74,7 +74,7 @@ t_minirt_p	*parse_scene_p(char *filename)
 	return (obj);
 }*/
 
-t_camera_p	*create_camera(t_vec *vp, t_vec *vector, int fov)
+t_camera_p	*create_camera(t_vec *vp, t_vec *vector, double fov)
 {
 	t_camera_p	*camera;
 

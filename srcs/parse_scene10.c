@@ -15,6 +15,7 @@
 t_object_p	*parse_sphere(char *str);
 t_object_p	*parse_plane(char *str);
 t_object_p	*parse_cylinder(char *str);
+t_object_p	*parse_cone(char *str);
 int			parse_error(int line_num, char *str);
 int			add_alight_to_scene(t_minirt_p *scene, char *str, int line_num);
 int			add_camera_to_scene(t_minirt_p *scene, char *str, int line_num);
@@ -63,10 +64,12 @@ int	add_object_to_scene(t_minirt_p *scene, char *str, int line_num)
 		new_object = parse_sphere(str);
 	else if (str[0] == 'p')
 		new_object = parse_plane(str);
-	else if (str[0] == 'c')
+	else if (str[1] == 'y')
 		new_object = parse_cylinder(str);
+	else if (str[1] == 'n')
+		new_object = parse_cone(str);
 	else
-		return (parse_error(line_num, "Wrong object indetifier"));
+		return (parse_error(line_num, "Wrong object identifier"));
 	if (new_object == NULL)
 		return (parse_error(line_num, "Object parse error. "));
 	add_object_to_array(&(scene->objects), new_object);
@@ -75,13 +78,13 @@ int	add_object_to_scene(t_minirt_p *scene, char *str, int line_num)
 
 int	is_object_in_str(char *str)
 {
-	if (str[0] != 's' && str[0] != 'p' && str[0] != 'c')
-		return (0);
-	if (str[1] != 'p' && str[1] != 'l' && str[1] != 'y')
-		return (0);
-	if (! ft_is_spc(str[2]))
-		return (0);
-	return (1);
+	int	result;
+
+	result = ! (ft_strncmp(str, "sp ", 3));
+	result = result || ! (ft_strncmp(str, "pl ", 3));
+	result = result || ! (ft_strncmp(str, "cy ", 3));
+	result = result || ! (ft_strncmp(str, "cn ", 3));
+	return (result);
 }
 
 int	parse_str_scene(t_minirt_p *scene, char *str, int line_num)

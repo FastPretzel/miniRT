@@ -12,13 +12,13 @@
 
 #include "minirt.h"
 
-t_color	*parse_color(char *str);
+t_color_p	*parse_color(char *str);
 t_vec	*parse_coord(char *str);
-t_light_p	*create_light(t_vec *point, float brightness, t_color *color);
+t_light_p	*create_light(t_vec *point, float brightness, t_color_p *color);
 
 int	check_light_args(char **args)
 {
-	t_color	*color;
+	t_color_p	*color;
 	t_vec	*coord;
 	float	ratio;
 	int		args_count;
@@ -48,7 +48,7 @@ t_light_p	*parse_light(char *str)
 {
 	char	**bloks;
 	t_light_p	*light;
-	t_color	*color;
+	t_color_p	*color;
 
 	str = ft_strdup(str);
 	replace_space_chars_to_space(str);
@@ -65,7 +65,7 @@ t_light_p	*parse_light(char *str)
 		color = NULL;
 	light = create_light(
 			parse_coord(bloks[1]),
-			ft_atod(bloks[2]),
+			ft_atof(bloks[2]),
 			color);
 	free_text(bloks);
 	free(str);
@@ -89,4 +89,21 @@ void	*error_open_file(char *filename)
 	ft_putstr_fd(filename, 2);
 	ft_putstr_fd("\n", 2);
 	return (NULL);
+}
+
+t_cone_p	*create_cone_data(t_vec *orig,
+							  double diam,
+							  double h,
+							  t_vec *vector)
+{
+	t_cylinder_p	*data;
+
+	data = malloc(sizeof(t_cone_p));
+	if (! data)
+		exit_error("malloc error in create_cylinder_data");
+	data->orig = orig;
+	data->d = diam;
+	data->dir = vector;
+	data->h = h;
+	return (data);
 }

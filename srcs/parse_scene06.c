@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-t_color		*parse_color(char *str);
+t_color_p		*parse_color(char *str);
 t_vec		*parse_coord(char *str);
 t_vec		*parse_norm_vector(char *str);
 int			check_base_object_args(char **args);
@@ -25,8 +25,12 @@ t_cylinder_p	*create_cylinder_data(t_vec *orig,
 									  double diam,
 									  double h,
 									  t_vec *vector);
+t_cylinder_p	*create_cone_data(t_vec *orig,
+								  double diam,
+								  double h,
+								  t_vec *vector);
 
-t_object_p	*create_base_object(enum e_obj_type type, t_color *color)
+t_object_p	*create_base_object(enum e_obj_type type, t_color_p *color)
 {
 	t_object_p	*object;
 
@@ -103,6 +107,31 @@ t_object_p	*parse_cylinder(char *str)
 	object = create_base_object(CYLINDER,
 			parse_color(bloks[5]));
 	object->params = create_cylinder_data(parse_coord(bloks[1]),
+										  ft_atod(bloks[3]),
+										  ft_atod(bloks[4]),
+										  parse_norm_vector(bloks[2]));
+	free_text(bloks);
+	free(str);
+	return (object);
+}
+
+t_object_p	*parse_cone(char *str)
+{
+	char			**bloks;
+	t_object_p		*object;
+
+	str = ft_strdup(str);
+	replace_space_chars_to_space(str);
+	bloks = ft_split_new(str, ' ');
+	if (check_base_object_args(bloks) == 0 || check_cylinder_args(bloks) == 0)
+	{
+		free_text(bloks);
+		free(str);
+		return (file_format_error("Cone wrong args"));
+	}
+	object = create_base_object(CONE,
+								parse_color(bloks[5]));
+	object->params = create_cone_data(parse_coord(bloks[1]),
 										  ft_atod(bloks[3]),
 										  ft_atod(bloks[4]),
 										  parse_norm_vector(bloks[2]));

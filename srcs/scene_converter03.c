@@ -6,11 +6,17 @@
 /*   By: eclown <eclown@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 17:14:06 by eclown            #+#    #+#             */
-/*   Updated: 2022/10/05 14:51:09 by eclown           ###   ########.fr       */
+/*   Updated: 2022/10/05 15:09:03 by eclown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minirt.h"
+
+int			get_array_count(void **arr);
+t_light		*convert_light(t_light_p *in);
+t_object	*convert_object(t_object_p *in);
+t_alight	*convert_alight(t_alight_p *in);
+t_camera	*convert_camera(t_camera_p *in);
 
 void	convert_lights(t_minirt_p *in, t_minirt *out)
 {

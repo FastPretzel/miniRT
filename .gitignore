@@ -2,3 +2,4 @@ objs
 *.o
 *.d
 minirt
+.idea

@@ -73,8 +73,8 @@ t_material	convert_material(t_material_p *in)
 	t_material	out;
 
 	out.color = convert_color(in->color);
-	out.albedo[0] = 0.6;
-	out.albedo[1] = 0.3;
-	out.spec_exp = 50;
+	out.albedo[0] = in->albedo[0];
+	out.albedo[1] = in->albedo[1];
+	out.spec_exp = in->spec_exp;
 	return (out);
 }

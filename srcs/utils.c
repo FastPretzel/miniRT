@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cgoth <cgoth@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/06 16:29:19 by cgoth            #+#    #+#             */
+/*   Updated: 2022/10/06 16:29:20 by cgoth           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 double	deg2rad(double deg)
@@ -12,22 +24,16 @@ double	ft_min_double(double a, double b)
 	return (b);
 }
 
-void	matr_mult(double a[4][4], double b[4][4], double res[4][4])
+void	reset_img(t_minirt *rt)
 {
 	int	i;
 	int	j;
-	int	k;
 
 	i = -1;
-	while (++i < 4)
+	while (++i < HEIGHT)
 	{
 		j = -1;
-		while (++j < 4)
-		{
-			res[i][j] = 0;
-			k = -1;
-			while (++k < 4)
-				res[i][j] += a[i][k] * b[k][j];
-		}
+		while (++j < WIDTH)
+			put_color(rt->mlx, j, i, (t_color){0, 0, 0});
 	}
 }

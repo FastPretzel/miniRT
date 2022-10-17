@@ -1,24 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cgoth <cgoth@student.21-school.ru>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/06 16:29:22 by cgoth            #+#    #+#             */
+/*   Updated: 2022/10/06 16:29:23 by cgoth           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
-int	inter_sphere(t_sphere *sp, t_ray *ray)
+typedef struct s_quad
+{
+	double	d2;
+	double	t0;
+	double	t1;
+	double	tca;
+	double	thc;
+}	t_quad;
+
+t_vec	get_norm_sphere(t_ray *ray, void *ptr)
+{
+	t_vec		normal;
+	t_sphere	*sp;
+
+	sp = (t_sphere *)ptr;
+	normal = vec_norm(vec_sub(ray->phit, sp->orig));
+	return (normal);
+}
+
+int	inter_sphere(void *ptr, t_ray *ray)
 {
 	t_vec		l;
-	double		d2;
-	double		t0;
-	double		t1;
-	double		tca;
-	double		thc;
+	t_quad		q;
+	t_sphere	*sp;
 
+	sp = (t_sphere *)ptr;
 	l = vec_sub(sp->orig, ray->orig);
-	tca = vec_dot(ray->dir, l);
-	d2 = vec_dot(l, l) - tca * tca;
-	if (d2 > sp->r * sp->r)
+	q.tca = vec_dot(ray->dir, l);
+	if (q.tca < 0)
 		return (0);
-	thc = sqrt(sp->r * sp->r - d2);
-	t0 = tca - thc;
-	t1 = tca + thc;
-	if (t0 < 0 && t1 < 0)
+	q.d2 = vec_dot(l, l) - q.tca * q.tca;
+	if (q.d2 > sp->r * sp->r)
 		return (0);
-	ray->t = ft_min_double(t0, t1);
+	q.thc = sqrt(sp->r * sp->r - q.d2);
+	q.t0 = q.tca - q.thc;
+	q.t1 = q.tca + q.thc;
+	if (q.t0 < 1e-4 || q.t0 > ray->t)
+	{
+		q.t0 = q.t1;
+		if (q.t0 < 1e-4 || q.t0 > ray->t)
+			return (0);
+	}
+	ray->t = q.t0;
 	return (1);
 }
